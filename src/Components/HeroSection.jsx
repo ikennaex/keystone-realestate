@@ -27,7 +27,7 @@ export default function HeroSection() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="max-w-3xl text-4xl font-bold leading-tight lg:text-6xl"
         >
-          Smart Real Estate Solutions Built for Growth and Security
+          Real Estate Solutions Built for Growth and Security
         </motion.h1>
 
         <motion.p
