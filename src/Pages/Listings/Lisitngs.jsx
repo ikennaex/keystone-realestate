@@ -11,12 +11,7 @@ const Listings = () => {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const filteredProperties = properties.filter(
-    (property) =>
-      (filter === "All" || property.type === filter) &&
-      property.title.toLowerCase().includes(search.toLowerCase())
-  );
-
+  
   const getListings = async () => {
     setLoading(true);
     try {
@@ -29,6 +24,12 @@ const Listings = () => {
       setLoading(false);
     }
   };
+  
+  const filteredProperties = properties?.filter(
+    (property) =>
+      (filter === "All" || property.type === filter) &&
+      property.title.toLowerCase().includes(search.toLowerCase())
+  );
 
   useEffect(() => {
     getListings();
