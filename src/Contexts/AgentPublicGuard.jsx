@@ -1,4 +1,4 @@
-import { Navigate } from "react-router";
+import { Navigate, Outlet } from "react-router";
 import Loader from "../Components/Loaders/Loader";
 import { useAgentAuth } from "./AgentAuthContext";
 
@@ -19,8 +19,7 @@ const AgentPublicGuard = ({ children }) => {
     return <Navigate to="/agent/dashboard" replace />;
   }
 
-  // 3️⃣ allowed to view login/register
-  return children;
+  return <Outlet />;
 };
 
 export default AgentPublicGuard;

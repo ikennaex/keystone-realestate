@@ -11,12 +11,11 @@ const Listings = () => {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  
   const getListings = async () => {
     setLoading(true);
     try {
       const response = await axios.get(`${baseUrl}api/properties`);
-      setProperties(response.data.data);
+      setProperties(response.data.data || []);
       console.log(response.data.data);
     } catch (err) {
       console.log(err);
@@ -24,11 +23,11 @@ const Listings = () => {
       setLoading(false);
     }
   };
-  
-  const filteredProperties = properties?.filter(
+
+  const filteredProperties = (properties || []).filter(
     (property) =>
       (filter === "All" || property.type === filter) &&
-      property.title.toLowerCase().includes(search.toLowerCase())
+      (property?.title || "").toLowerCase().includes(search.toLowerCase())
   );
 
   useEffect(() => {
