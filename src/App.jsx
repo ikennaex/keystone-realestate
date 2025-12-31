@@ -10,6 +10,17 @@ import ScrollToTop from "./Components/ScrollToTop";
 import BuyersPage from "./Pages/Buyers/BuyersPage";
 import Contact from "./Pages/Contact/Contact";
 import Careers from "./Pages/Careers/Careers";
+import PostProperty from "./Pages/Agent/PostProperty";
+import AgentRegister from "./Pages/Agent/AgentRegister";
+import AgentLogin from "./Pages/Agent/AgentLogin";
+import AdminRegister from "./Pages/Admin/AdminRegister";
+import AdminLogin from "./Pages/Admin/AdminLogin";
+import AdminDashboard from "./Pages/Admin/AdminDashboard/AdminDashboard";
+import AgentDashboard from "./Pages/Agent/AgentDashboard";
+import AgentViewEnquiries from "./Pages/Agent/AgentViewEnquiries";
+import UserDashboard from "./Pages/User/UserDashboard";
+import AgentAuthGuard from "./Contexts/AgentAuthGuard";
+import AgentPublicGuard from "./Contexts/AgentPublicGuard";
 
 const App = () => {
   return (
@@ -24,6 +35,30 @@ const App = () => {
         <Route path = "/buyers"  element = {<BuyersPage />} />
         <Route path = "/contact"  element = {<Contact />} />
         <Route path = "/careers"  element = {<Careers />} />
+
+        {/* User Routes */}
+        <Route path="user">
+        <Route path = "dashboard"  element = {<UserDashboard />} />
+        </Route>
+
+        {/* Agent Routes */}
+        <Route path="agent">
+        <Route element={<AgentPublicGuard />}>
+        <Route path = "register"  element = {<AgentRegister />} />
+        <Route path = "login"  element = {<AgentLogin />} />
+        </Route>
+
+        <Route element={<AgentAuthGuard />}>
+        <Route path = "post-property"  element = {<PostProperty />} />
+        <Route path = "dashboard"  element = {<AgentDashboard />} />
+        <Route path = "enquiries"  element = {<AgentViewEnquiries />} />
+        </Route>
+        </Route>
+
+        {/* Admin Routes  */}
+        <Route path = "/admin-register"  element = {<AdminRegister />} />
+        <Route path = "/admin-login"  element = {<AdminLogin />} />
+        <Route path = "/admin-dashboard"  element = {<AdminDashboard />} />
       </Routes>
       <Footer />
     </div>

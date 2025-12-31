@@ -16,19 +16,19 @@ const Navbar = () => {
 
         {/* Desktop Navigation */}
         <div className="hidden items-center gap-8 md:flex">
-          <a
-            href="listings"
+          <Link
+            to="/listings"
             className="text-sm font-medium text-slate-700 hover:text-slate-900"
           >
             View Listings
-          </a>
+          </Link>
 
-          <a
+          {/* <a
             href="#agents"
             className="text-sm font-medium text-slate-700 hover:text-slate-900"
           >
             Meet Agents
-          </a>
+          </a> */}
 
           <a
             href="#consultation"

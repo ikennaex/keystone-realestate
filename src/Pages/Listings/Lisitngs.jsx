@@ -1,51 +1,46 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
-
-// Sample property data
-const properties = [
-  {
-    id: 1,
-    title: "Luxury 3 Bedroom Apartment",
-    location: "Lagos, Nigeria",
-    price: "₦120,000,000",
-    image: "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg",
-    type: "Residential",
-  },
-  {
-    id: 2,
-    title: "Modern Office Space",
-    location: "Abuja, Nigeria",
-    price: "₦250,000,000",
-    image: "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg",
-    type: "Commercial",
-  },
-  {
-    id: 3,
-    title: "Investment Property with High ROI",
-    location: "Port Harcourt, Nigeria",
-    price: "₦80,000,000",
-    image: "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg",
-    type: "Investment",
-  },
-  {
-    id: 4,
-    title: "Cozy Family House",
-    location: "Lagos, Nigeria",
-    price: "₦70,000,000",
-    image: "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg",
-    type: "Residential",
-  },
-];
+import { baseUrl } from "../../baseUrl";
+import Loader from "../../Components/Loaders/Loader";
+import { div } from "framer-motion/client";
 
 const Listings = () => {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("All");
+  const [properties, setProperties] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const filteredProperties = properties.filter(
     (property) =>
       (filter === "All" || property.type === filter) &&
       property.title.toLowerCase().includes(search.toLowerCase())
   );
+
+  const getListings = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(`${baseUrl}api/properties`);
+      setProperties(response.data.data);
+      console.log(response.data.data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getListings();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex min-h-[60vh] items-center justify-center">
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <section className="bg-white text-slate-900 py-20 mt-20">
@@ -75,26 +70,40 @@ const Listings = () => {
         {/* Properties Grid */}
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {filteredProperties.map((property) => (
-            <Link to={"/listings/jfjfj"}>
-            <div
-              key={property.id}
-              className="rounded-2xl border border-slate-200 shadow-sm transition hover:shadow-lg"
-            >
-              <img
-                src={property.image}
-                alt={property.title}
-                className="h-48 w-full rounded-t-2xl object-cover"
-              />
-              <div className="p-6">
-                <h3 className="text-lg font-semibold text-slate-900">{property.title}</h3>
-                <p className="mt-1 text-sm text-slate-600">{property.location}</p>
-                <p className="mt-2 text-slate-900 font-semibold">{property.price}</p>
-                <p className="mt-2 text-sm text-slate-500">{property.type}</p>
-                <button className="mt-4 w-full rounded-2xl bg-slate-900 px-4 py-2 text-white transition hover:bg-slate-700">
-                  View Details
-                </button>
+            <Link to={`/listings/${property.id}`} key={property.id}>
+              <div
+                key={property.id}
+                className="rounded-2xl border border-slate-200 shadow-sm transition hover:shadow-lg"
+              >
+                <img
+                  src={property?.media[0]?.url}
+                  alt={property.title}
+                  className="h-48 w-full rounded-t-2xl object-cover"
+                />
+                <div className="p-6">
+                  <h3 className="text-lg font-semibold text-slate-900">
+                    {property.title}
+                  </h3>
+                  <p className="mt-1 text-sm text-slate-600">
+                    {property.address +
+                      ", " +
+                      property.area +
+                      ", " +
+                      property.city +
+                      ", " +
+                      property.state}
+                  </p>
+                  <p className="mt-2 text-slate-900 font-semibold">
+                    ${property.price}
+                  </p>
+                  <p className="mt-2 text-sm text-slate-500">
+                    {property.listingType}
+                  </p>
+                  <button className="mt-4 w-full rounded-2xl bg-slate-900 px-4 py-2 text-white transition hover:bg-slate-700">
+                    View Details
+                  </button>
+                </div>
               </div>
-            </div>
             </Link>
           ))}
 
