@@ -13,7 +13,7 @@ const AgentLogin = () => {
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
-  const {api, setAccessToken, setAgent,isAuthenticated} = useAgentAuth()
+  const { api, setAccessToken, setAgent, isAuthenticated } = useAgentAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,8 +25,8 @@ const AgentLogin = () => {
     e.preventDefault();
     try {
       const res = await api.post(`api/agent/login`, formData);
-      setAccessToken(res.data.token)
-      setAgent(res.data.agent)
+      setAccessToken(res.data.token);
+      setAgent(res.data.agent);
       alert(res.data.message);
       navigate("/agent/dashboard");
       console.log(res);
@@ -72,24 +72,28 @@ const AgentLogin = () => {
           </div>
 
           {/* Password */}
-          <div className="relative">
+          <div>
             <label className="mb-1 block font-semibold">Password</label>
-            <input
-              type={showPassword ? "text" : "password"}
-              name="password"
-              required
-              placeholder="Enter your password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full rounded-xl border px-4 py-3 pr-12 focus:ring-2 focus:ring-slate-500"
-            />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700"
-            >
-              {showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
-            </button>
+
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                required
+                placeholder="Enter your password"
+                value={formData.password}
+                onChange={handleChange}
+                className="w-full rounded-xl border px-4 py-3 pr-12 focus:ring-2 focus:ring-slate-500"
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-3 flex items-center text-slate-400 hover:text-slate-700"
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </div>
           </div>
 
           <button

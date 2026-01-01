@@ -8,10 +8,8 @@ const PostProperty = () => {
   const { api, agent, setAgent, accessToken } = useAgentAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  console.log(accessToken);
-  console.log(agent);
+
   const [formData, setFormData] = useState({
-    // agent: agent ? agent.id : null,
     title: "",
     description: "",
     price: 0,
@@ -26,6 +24,7 @@ const PostProperty = () => {
     city: "",
     state: "",
   });
+
   const [selectedImages, setSelectedImages] = useState([]);
   const [video, setVideo] = useState(null);
   const [imagePreviews, setImagePreviews] = useState([]);
@@ -33,21 +32,25 @@ const PostProperty = () => {
   const fetchAgent = async () => {
     try {
       const res = await api.get("api/agent-profile");
-      console.log(res);
       setAgent(res.data.data);
     } catch (err) {
       console.log(err);
     }
   };
 
-  // for image previews
+  useEffect(() => {
+    fetchAgent();
+  }, []);
+
   useEffect(() => {
     if (selectedImages.length === 0) {
       setImagePreviews([]);
       return;
     }
 
-    const previews = selectedImages.map((file) => URL.createObjectURL(file));
+    const previews = selectedImages.map((file) =>
+      URL.createObjectURL(file)
+    );
 
     setImagePreviews(previews);
 
@@ -56,18 +59,12 @@ const PostProperty = () => {
     };
   }, [selectedImages]);
 
-  useEffect(() => {
-    fetchAgent();
-  }, []);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // create property
   const createProperty = async () => {
-    console.log("Submitted Property:", formData);
     const payload = {
       ...formData,
       price: Number(formData.price),
@@ -75,22 +72,17 @@ const PostProperty = () => {
       bathrooms: Number(formData.bathrooms),
       size: Number(formData.size),
     };
-    // sending payload to backend because it needs to be formatted to number
+
     try {
       const res = await api.post(`${baseUrl}api/properties`, payload);
-      console.log(res);
       return res.data.data.id;
-      // alert(res.data.message || "Property posted successfully");
-      // navigate("/agent/dashboard");
     } catch (err) {
-      console.log(err);
-      alert(err.response.data.message || "Failed to post property");
+      alert(err.response?.data?.message || "Failed to post property");
     }
   };
 
   const uploadImages = async (propertyId, files) => {
     const formData = new FormData();
-    console.log(files);
 
     files.forEach((file) => {
       formData.append("files[]", file);
@@ -102,95 +94,70 @@ const PostProperty = () => {
 
     formData.append("propertyId", propertyId);
 
-    const res = await api.post(
+    return api.post(
       `/api/properties/${propertyId}/upload-media`,
       formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
+      { headers: { "Content-Type": "multipart/form-data" } }
     );
-
-    return res;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
     try {
       const propertyId = await createProperty();
       if (!propertyId) return;
-      const res = await uploadImages(propertyId, selectedImages);
-      console.log(res);
+
+      await uploadImages(propertyId, selectedImages);
 
       alert("Property uploaded successfully");
       navigate("/agent/dashboard");
     } catch (error) {
-      setLoading(false);
-      console.error(error);
       alert("Upload failed");
     } finally {
       setLoading(false);
     }
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   console.log("Submitted Property:", formData);
-
-  //   try {
-  //     const res = await api.post(`${baseUrl}api/properties`, formData);
-  //     console.log(res);
-  //     alert(res.data.message || "Property posted successfully");
-  //     navigate("/agent/dashboard");
-  //   } catch (err) {
-  //     console.log(err);
-  //     alert(err.response.data.message || "Failed to post property");
-  //   }
-  // };
-
   return (
-    <section className="bg-white py-20 mt-20 text-slate-900">
-      <div className="mx-auto max-w-5xl px-6">
-        <h1 className="mb-8 text-3xl font-bold lg:text-4xl">
+    <section className="mt-20 bg-white py-10 sm:py-16 lg:py-20 mt-10 sm:mt-16 lg:mt-20 text-slate-900">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6">
+        <h1 className="mb-6 text-2xl sm:text-3xl lg:text-4xl font-bold">
           Post a Property Listing
         </h1>
 
         <form
           onSubmit={handleSubmit}
-          className="grid gap-8 rounded-2xl border border-slate-200 bg-slate-50 p-8 shadow-sm"
+          className="grid gap-6 sm:gap-8 rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-6 lg:p-8 shadow-sm"
         >
-          {/* Title */}
           <div>
             <label className="mb-1 block font-semibold">Property Title</label>
             <input
               type="text"
               name="title"
-              maxLength={255}
               required
+              maxLength={255}
               placeholder="Luxury 3 Bedroom Apartment"
               value={formData.title}
               onChange={handleChange}
-              className="w-full rounded-xl border px-4 py-3"
+              className="w-full rounded-xl border px-3 py-2.5 sm:px-4 sm:py-3"
             />
           </div>
 
-          {/* Description */}
           <div>
             <label className="mb-1 block font-semibold">Description</label>
             <textarea
               name="description"
               rows={4}
               required
-              placeholder="add a description"
+              placeholder="Add a description"
               value={formData.description}
               onChange={handleChange}
-              className="w-full rounded-xl border px-4 py-3"
+              className="w-full rounded-xl border px-3 py-2.5 sm:px-4 sm:py-3"
             />
           </div>
 
-          {/* Price + Size */}
           <div className="grid gap-6 sm:grid-cols-2">
             <div>
               <label className="mb-1 block font-semibold">Price</label>
@@ -198,216 +165,165 @@ const PostProperty = () => {
                 type="number"
                 name="price"
                 required
-                placeholder="4326.41"
                 value={formData.price}
                 onChange={handleChange}
-                className="w-full rounded-xl border px-4 py-3"
+                className="w-full rounded-xl border px-3 py-2.5 sm:px-4 sm:py-3"
               />
             </div>
 
             <div>
-              <label className="mb-1 block font-semibold">
-                Property Size (sqm)
-              </label>
+              <label className="mb-1 block font-semibold">Property Size (sqm)</label>
               <input
                 type="number"
                 name="size"
-                placeholder="4326.41"
                 value={formData.size}
                 onChange={handleChange}
-                className="w-full rounded-xl border px-4 py-3"
+                className="w-full rounded-xl border px-3 py-2.5 sm:px-4 sm:py-3"
               />
             </div>
           </div>
 
-          {/* Property Type + Listing Type */}
           <div className="grid gap-6 sm:grid-cols-2">
-            <div>
-              <label className="mb-1 block font-semibold">Property Type</label>
-              <select
-                name="propertyType"
-                required
-                value={formData.propertyType}
-                onChange={handleChange}
-                className="w-full rounded-xl border px-4 py-3"
-              >
-                <option value="">Select type</option>
-                <option value="house">House</option>
-                <option value="apartment">Apartment</option>
-                <option value="shortlet">Shortlet</option>
-                <option value="penthouse">Penthouse</option>
-                <option value="land">Land</option>
-                <option value="commercial">Commercial</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="mb-1 block font-semibold">Listing Type</label>
-              <select
-                name="listingType"
-                required
-                value={formData.listingType}
-                onChange={handleChange}
-                className="w-full rounded-xl border px-4 py-3"
-              >
-                <option value="">Select listing</option>
-                <option value="sale">Sale</option>
-                <option value="rent">Rent</option>
-              </select>
-            </div>
-          </div>
-
-          {/* Status + Beds + Baths */}
-          <div className="grid gap-6 sm:grid-cols-3">
-            <div>
-              <label className="mb-1 block font-semibold">Status</label>
-              <select
-                name="status"
-                value={formData.status}
-                onChange={handleChange}
-                className="w-full rounded-xl border px-4 py-3"
-              >
-                <option value="available">Available</option>
-                <option value="sold">Sold</option>
-                <option value="unavailable">Unavailable</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="mb-1 block font-semibold">Bedrooms</label>
-              <input
-                type="number"
-                name="bedrooms"
-                placeholder="3"
-                value={formData.bedrooms}
-                onChange={handleChange}
-                className="w-full rounded-xl border px-4 py-3"
-              />
-            </div>
-
-            <div>
-              <label className="mb-1 block font-semibold">Bathrooms</label>
-              <input
-                type="number"
-                name="bathrooms"
-                placeholder="2"
-                value={formData.bathrooms}
-                onChange={handleChange}
-                className="w-full rounded-xl border px-4 py-3"
-              />
-            </div>
-          </div>
-
-          {/* Address */}
-          <div>
-            <label className="mb-1 block font-semibold">Address</label>
-            <input
-              type="text"
-              name="address"
-              maxLength={500}
+            <select
+              name="propertyType"
               required
-              placeholder="Lekki Phase 1, Lagos"
-              value={formData.address}
+              value={formData.propertyType}
               onChange={handleChange}
-              className="w-full rounded-xl border px-4 py-3"
+              className="w-full rounded-xl border px-3 py-2.5 sm:px-4 sm:py-3"
+            >
+              <option value="">Select property type</option>
+              <option value="house">House</option>
+              <option value="apartment">Apartment</option>
+              <option value="shortlet">Shortlet</option>
+              <option value="penthouse">Penthouse</option>
+              <option value="land">Land</option>
+              <option value="commercial">Commercial</option>
+            </select>
+
+            <select
+              name="listingType"
+              required
+              value={formData.listingType}
+              onChange={handleChange}
+              className="w-full rounded-xl border px-3 py-2.5 sm:px-4 sm:py-3"
+            >
+              <option value="">Select listing type</option>
+              <option value="sale">Sale</option>
+              <option value="rent">Rent</option>
+            </select>
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-3">
+            <select
+              name="status"
+              value={formData.status}
+              onChange={handleChange}
+              className="w-full rounded-xl border px-3 py-2.5 sm:px-4 sm:py-3"
+            >
+              <option value="available">Available</option>
+              <option value="sold">Sold</option>
+              <option value="unavailable">Unavailable</option>
+            </select>
+
+            <input
+              type="number"
+              name="bedrooms"
+              placeholder="Bedrooms"
+              value={formData.bedrooms}
+              onChange={handleChange}
+              className="w-full rounded-xl border px-3 py-2.5 sm:px-4 sm:py-3"
+            />
+
+            <input
+              type="number"
+              name="bathrooms"
+              placeholder="Bathrooms"
+              value={formData.bathrooms}
+              onChange={handleChange}
+              className="w-full rounded-xl border px-3 py-2.5 sm:px-4 sm:py-3"
             />
           </div>
 
-          {/* Area + City + State */}
+          <input
+            type="text"
+            name="address"
+            required
+            placeholder="Address"
+            value={formData.address}
+            onChange={handleChange}
+            className="w-full rounded-xl border px-3 py-2.5 sm:px-4 sm:py-3"
+          />
+
           <div className="grid gap-6 sm:grid-cols-3">
             <input
               type="text"
               name="area"
-              maxLength={100}
               required
-              placeholder="Victoria Island"
+              placeholder="Area"
               value={formData.area}
               onChange={handleChange}
-              className="rounded-xl border px-4 py-3"
+              className="rounded-xl border px-3 py-2.5 sm:px-4 sm:py-3"
             />
             <input
               type="text"
               name="city"
-              maxLength={100}
               required
-              placeholder="Lagos"
+              placeholder="City"
               value={formData.city}
               onChange={handleChange}
-              className="rounded-xl border px-4 py-3"
+              className="rounded-xl border px-3 py-2.5 sm:px-4 sm:py-3"
             />
             <input
               type="text"
               name="state"
-              maxLength={100}
               required
-              placeholder="Lagos State"
+              placeholder="State"
               value={formData.state}
               onChange={handleChange}
-              className="rounded-xl border px-4 py-3"
+              className="rounded-xl border px-3 py-2.5 sm:px-4 sm:py-3"
             />
           </div>
 
-          <div>
-            <label className="mb-1 block font-semibold">Property Images</label>
-            <input
-              type="file"
-              multiple
-              accept="image/*"
-              onChange={(e) => setSelectedImages(Array.from(e.target.files))}
-            />
+          <input
+            type="file"
+            multiple
+            accept="image/*"
+            onChange={(e) => setSelectedImages(Array.from(e.target.files))}
+            className="block w-full text-sm text-slate-600
+              file:mr-4 file:rounded-lg file:border-0
+              file:bg-slate-900 file:px-4 file:py-2
+              file:text-white hover:file:bg-slate-700"
+          />
 
-            {imagePreviews.length > 0 && (
-              <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
-                {imagePreviews.map((src, index) => (
-                  <div
-                    key={index}
-                    className="overflow-hidden rounded-xl border"
-                  >
-                    <img
-                      src={src}
-                      alt={`Preview ${index + 1}`}
-                      className="h-32 w-full object-cover"
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+          {imagePreviews.length > 0 && (
+            <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4">
+              {imagePreviews.map((src, i) => (
+                <img
+                  key={i}
+                  src={src}
+                  className="h-40 sm:h-32 w-full object-cover rounded-xl"
+                  alt=""
+                />
+              ))}
+            </div>
+          )}
 
-          <div>
-            <label className="mb-1 block font-semibold">
-              Property Video (Optional)
-            </label>
-            <input
-              type="file"
-              multiple
-              accept="video/*"
-              onChange={(e) => setVideo(e.target.files[0] || null)}
-            />
+          <input
+            type="file"
+            accept="video/*"
+            onChange={(e) => setVideo(e.target.files[0])}
+            className="block w-full text-sm text-slate-600
+              file:mr-4 file:rounded-lg file:border-0
+              file:bg-slate-900 file:px-4 file:py-2
+              file:text-white hover:file:bg-slate-700"
+          />
 
-            {/* {imagePreviews.length > 0 && (
-              <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
-                {imagePreviews.map((src, index) => (
-                  <div
-                    key={index}
-                    className="overflow-hidden rounded-xl border"
-                  >
-                    <video
-                      src={src}
-                      alt={`Preview ${index + 1}`}
-                      className="h-32 w-full object-cover"
-                    />
-                  </div>
-                ))}
-              </div>
-            )} */}
-          </div>
-
-          {/* Submit */}
           <button
             disabled={loading}
             type="submit"
-            className="mt-4 rounded-2xl bg-slate-900 px-8 py-4 font-semibold text-white transition hover:bg-slate-700 disabled:bg-slate-800/50"
+            className="mt-4 w-full sm:w-auto rounded-2xl bg-slate-900
+              px-6 sm:px-8 py-3 sm:py-4 font-semibold text-white
+              transition hover:bg-slate-700 disabled:bg-slate-800/50"
           >
             {loading ? "Posting..." : "Publish Property"}
           </button>
