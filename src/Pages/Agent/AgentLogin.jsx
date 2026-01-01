@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import axios from "axios";
 import { baseUrl } from "../../baseUrl";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useAgentAuth } from "../../Contexts/AgentAuthContext";
 
 const AgentLogin = () => {
@@ -109,6 +109,12 @@ const AgentLogin = () => {
             <a href="#" className="text-slate-900 underline">
               Reset it
             </a>
+          </p>
+          <p className="text-center text-sm text-slate-500">
+            New to Keystone?{" "}
+            <Link to = "/agent/register" className="text-slate-900 underline">
+              Register
+            </Link>
           </p>
         </form>
       </div>
