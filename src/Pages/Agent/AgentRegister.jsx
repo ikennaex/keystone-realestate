@@ -156,6 +156,9 @@ const AgentRegister = () => {
           </button>
 
           <p className="mt-4 text-center text-sm text-slate-500">
+            Already an Agent? <Link to= "/agent/login" className="text-customBlue font-bold">Login</Link>.
+          </p>
+          <p className="mt-4 text-center text-sm text-slate-500">
             By registering, you agree to Keystone Real Estate policies and
             onboarding terms.
           </p>
