@@ -23,6 +23,13 @@ const Navbar = () => {
             View Listings
           </Link>
 
+          <Link
+            to="/agent/register"
+            className="text-sm font-medium text-slate-700 hover:text-slate-900"
+          >
+            Become an Agent
+          </Link>
+
           {/* <a
             href="#agents"
             className="text-sm font-medium text-slate-700 hover:text-slate-900"
@@ -62,6 +69,14 @@ const Navbar = () => {
               onClick={() => setMenuOpen(false)}
             >
               View Listings
+            </Link>
+
+            <Link
+              to="/agent/register"
+              className="text-sm font-medium text-slate-700"
+              onClick={() => setMenuOpen(false)}
+            >
+              Become an Agent
             </Link>
 
             {/* <Link
