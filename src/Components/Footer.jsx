@@ -25,7 +25,7 @@ const Footer = () => {
 
             <div className="flex items-center gap-2 text-sm">
               <MapPin size={16} />
-              <span>Lagos, Nigeria</span>
+              <span>17 Hobson street Newark NJ 07112</span>
             </div>
           </div>
 

@@ -87,7 +87,7 @@ const Contact = () => {
             <div className="space-y-4">
               <div className="flex items-center gap-3">
                 <MapPin />
-                <p>123 Keystone Street, Lagos, Nigeria</p>
+                <p>17 Hobson street Newark NJ 07112</p>
               </div>
               <div className="flex items-center gap-3">
                 <Phone />
