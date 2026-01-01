@@ -56,29 +56,29 @@ const Navbar = () => {
       {menuOpen && (
         <div className="border-t bg-white md:hidden">
           <div className="flex flex-col gap-4 px-6 py-6">
-            <a
-              href="#listings"
+            <Link
+              to="/listings"
               className="text-sm font-medium text-slate-700"
               onClick={() => setMenuOpen(false)}
             >
               View Listings
-            </a>
+            </Link>
 
-            <a
+            {/* <Link
               href="#agents"
               className="text-sm font-medium text-slate-700"
               onClick={() => setMenuOpen(false)}
             >
               Meet Agents
-            </a>
+            </Link> */}
 
-            <a
-              href="#consultation"
+            <Link
+              href="/contact"
               className="rounded-xl bg-customBlue px-5 py-3 text-center text-sm font-semibold text-white"
               onClick={() => setMenuOpen(false)}
             >
               Schedule Consultation
-            </a>
+            </Link>
           </div>
         </div>
       )}
