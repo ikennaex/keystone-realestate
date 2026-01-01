@@ -48,9 +48,7 @@ const PostProperty = () => {
       return;
     }
 
-    const previews = selectedImages.map((file) =>
-      URL.createObjectURL(file)
-    );
+    const previews = selectedImages.map((file) => URL.createObjectURL(file));
 
     setImagePreviews(previews);
 
@@ -94,11 +92,9 @@ const PostProperty = () => {
 
     formData.append("propertyId", propertyId);
 
-    return api.post(
-      `/api/properties/${propertyId}/upload-media`,
-      formData,
-      { headers: { "Content-Type": "multipart/form-data" } }
-    );
+    return api.post(`/api/properties/${propertyId}/upload-media`, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -121,7 +117,7 @@ const PostProperty = () => {
   };
 
   return (
-    <section className="mt-20 bg-white py-10 sm:py-16 lg:py-20 mt-10 sm:mt-16 lg:mt-20 text-slate-900">
+    <section className="mt-20 bg-white py-10 sm:py-16 lg:py-20 sm:mt-16 lg:mt-20 text-slate-900">
       <div className="mx-auto max-w-5xl px-4 sm:px-6">
         <h1 className="mb-6 text-2xl sm:text-3xl lg:text-4xl font-bold">
           Post a Property Listing
@@ -172,7 +168,9 @@ const PostProperty = () => {
             </div>
 
             <div>
-              <label className="mb-1 block font-semibold">Property Size (sqm)</label>
+              <label className="mb-1 block font-semibold">
+                Property Size (sqm)
+              </label>
               <input
                 type="number"
                 name="size"
@@ -284,6 +282,8 @@ const PostProperty = () => {
             />
           </div>
 
+          <label className="mb-1 block font-semibold">Property Images</label>
+
           <input
             type="file"
             multiple
@@ -291,8 +291,8 @@ const PostProperty = () => {
             onChange={(e) => setSelectedImages(Array.from(e.target.files))}
             className="block w-full text-sm text-slate-600
               file:mr-4 file:rounded-lg file:border-0
-              file:bg-slate-900 file:px-4 file:py-2
-              file:text-white hover:file:bg-slate-700"
+              file:bg-customBlue file:px-4 file:py-2
+              file:text-white hover:file:bg-customBlue"
           />
 
           {imagePreviews.length > 0 && (
@@ -308,22 +308,25 @@ const PostProperty = () => {
             </div>
           )}
 
+          <label className="mb-1 block font-semibold">
+            Property Video (Optional)
+          </label>
           <input
             type="file"
             accept="video/*"
             onChange={(e) => setVideo(e.target.files[0])}
             className="block w-full text-sm text-slate-600
               file:mr-4 file:rounded-lg file:border-0
-              file:bg-slate-900 file:px-4 file:py-2
-              file:text-white hover:file:bg-slate-700"
+              file:bg-customBlue file:px-4 file:py-2
+              file:text-white hover:file:bg-customBlue"
           />
 
           <button
             disabled={loading}
             type="submit"
-            className="mt-4 w-full sm:w-auto rounded-2xl bg-slate-900
+            className="mt-4 w-full sm:w-auto rounded-2xl bg-customBlue
               px-6 sm:px-8 py-3 sm:py-4 font-semibold text-white
-              transition hover:bg-slate-700 disabled:bg-slate-800/50"
+              transition hover:bg-customBlue/50 disabled:bg-customBlue/50"
           >
             {loading ? "Posting..." : "Publish Property"}
           </button>
