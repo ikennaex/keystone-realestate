@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { baseUrl } from "../../baseUrl";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 const AgentRegister = () => {
   const [loading, setLoading] = useState(false);
