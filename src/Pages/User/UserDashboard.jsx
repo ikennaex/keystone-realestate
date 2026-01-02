@@ -5,6 +5,7 @@ import {
   MessageSquare,
   Search,
 } from "lucide-react";
+import { Link } from "react-router";
 
 const UserDashboard = () => {
   return (
@@ -22,7 +23,7 @@ const UserDashboard = () => {
 
         {/* Stats */}
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="rounded-2xl bg-white p-6 shadow">
+          {/* <div className="rounded-2xl bg-white p-6 shadow">
             <div className="flex items-center gap-4">
               <Home className="text-slate-900" />
               <div>
@@ -30,9 +31,9 @@ const UserDashboard = () => {
                 <h3 className="text-2xl font-bold">12</h3>
               </div>
             </div>
-          </div>
+          </div> */}
 
-          <div className="rounded-2xl bg-white p-6 shadow">
+          {/* <div className="rounded-2xl bg-white p-6 shadow">
             <div className="flex items-center gap-4">
               <Heart className="text-slate-900" />
               <div>
@@ -40,7 +41,7 @@ const UserDashboard = () => {
                 <h3 className="text-2xl font-bold">5</h3>
               </div>
             </div>
-          </div>
+          </div> */}
 
           <div className="rounded-2xl bg-white p-6 shadow">
             <div className="flex items-center gap-4">
@@ -101,7 +102,9 @@ const UserDashboard = () => {
             Browse verified listings from trusted agents.
           </p>
           <button className="rounded-xl bg-white px-8 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-200">
+            <Link to={"/listings"}>
             Browse Listings
+            </Link>
           </button>
         </div>
       </div>

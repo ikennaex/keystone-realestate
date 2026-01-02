@@ -21,6 +21,10 @@ import AgentViewEnquiries from "./Pages/Agent/AgentViewEnquiries";
 import UserDashboard from "./Pages/User/UserDashboard";
 import AgentAuthGuard from "./Contexts/AgentAuthGuard";
 import AgentPublicGuard from "./Contexts/AgentPublicGuard";
+import UserLogin from "./Pages/User/UserLogin";
+import UserRegister from "./Pages/User/UserRegister";
+import AdminAuthGuard from "./Contexts/AdminAuthGuard";
+import AdminPublicGuard from "./Contexts/AdminPublicGuard";
 
 const App = () => {
   return (
@@ -28,37 +32,43 @@ const App = () => {
       <ScrollToTop />
       <Navbar />
       <Routes>
-        <Route path = "/"  element = {<Homepage />} />
-        <Route path = "/about"  element = {<About />} />
-        <Route path = "/listings"  element = {<Listings />} />
-        <Route path = "/listings/:id"  element = {<ListingDetails />} />
-        <Route path = "/buyers"  element = {<BuyersPage />} />
-        <Route path = "/contact"  element = {<Contact />} />
-        <Route path = "/careers"  element = {<Careers />} />
+        <Route path="/" element={<Homepage />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/listings" element={<Listings />} />
+        <Route path="/listings/:id" element={<ListingDetails />} />
+        <Route path="/buyers" element={<BuyersPage />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/careers" element={<Careers />} />
 
         {/* User Routes */}
         <Route path="user">
-        <Route path = "dashboard"  element = {<UserDashboard />} />
+          <Route path="dashboard" element={<UserDashboard />} />
+          <Route path="login" element={<UserLogin />} />
+          <Route path="register" element={<UserRegister />} />
         </Route>
 
         {/* Agent Routes */}
         <Route path="agent">
-        <Route element={<AgentPublicGuard />}>
-        <Route path = "register"  element = {<AgentRegister />} />
-        <Route path = "login"  element = {<AgentLogin />} />
-        </Route>
+          <Route element={<AgentPublicGuard />}>
+            <Route path="register" element={<AgentRegister />} />
+            <Route path="login" element={<AgentLogin />} />
+          </Route>
 
-        <Route element={<AgentAuthGuard />}>
-        <Route path = "post-property"  element = {<PostProperty />} />
-        <Route path = "dashboard"  element = {<AgentDashboard />} />
-        <Route path = "enquiries"  element = {<AgentViewEnquiries />} />
-        </Route>
+          <Route element={<AgentAuthGuard />}>
+            <Route path="post-property" element={<PostProperty />} />
+            <Route path="dashboard" element={<AgentDashboard />} />
+            <Route path="enquiries" element={<AgentViewEnquiries />} />
+          </Route>
         </Route>
 
         {/* Admin Routes  */}
-        <Route path = "/admin-register"  element = {<AdminRegister />} />
-        <Route path = "/admin-login"  element = {<AdminLogin />} />
-        <Route path = "/admin-dashboard"  element = {<AdminDashboard />} />
+        <Route element={<AdminPublicGuard />}>
+        <Route path="/admin-register" element={<AdminRegister />} />
+        <Route path="/admin-login" element={<AdminLogin />} />
+        </Route>
+        <Route element={<AdminAuthGuard />}>
+          <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        </Route>
       </Routes>
       <Footer />
     </div>

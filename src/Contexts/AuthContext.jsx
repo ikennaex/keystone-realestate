@@ -5,34 +5,44 @@ import { baseUrl } from "../baseUrl";
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  const [accessToken, setAccessToken] = useState(
-    () => localStorage.getItem("accessToken")
+  // 1. HYDRATE STATE
+  const [accessToken, setAccessTokenState] = useState(() =>
+    localStorage.getItem("accessToken")
   );
-  const [user, setUser] = useState(
-    () => JSON.parse(localStorage.getItem("user"))
-  );
+
+  const [user, setUser] = useState(() => {
+    const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
+
+  const [loading, setLoading] = useState(true);
 
   const isAuthenticated = !!accessToken;
 
-  // Persist accessToken
+  // 2. PERSIST ACCESS TOKEN
   useEffect(() => {
-    if (accessToken) localStorage.setItem("accessToken", accessToken);
-    else localStorage.removeItem("accessToken");
+    if (accessToken) {
+      localStorage.setItem("accessToken", accessToken);
+    } else {
+      localStorage.removeItem("accessToken");
+    }
   }, [accessToken]);
 
-  // Persist user
+  // 3. PERSIST USER
   useEffect(() => {
-    if (user) localStorage.setItem("user", JSON.stringify(user));
-    else localStorage.removeItem("user");
+    if (user) {
+      localStorage.setItem("user", JSON.stringify(user));
+    } else {
+      localStorage.removeItem("user");
+    }
   }, [user]);
 
-  // Create Axios instance with memoization
+  // 4. MEMOIZED AXIOS INSTANCE
   const api = useMemo(() => {
     const instance = axios.create({
-      baseURL: baseUrl, 
+      baseURL: baseUrl,
     });
 
-    // Attach access token automatically
     instance.interceptors.request.use(
       (config) => {
         if (accessToken) {
@@ -46,6 +56,40 @@ export const AuthProvider = ({ children }) => {
     return instance;
   }, [accessToken]);
 
+  // 5. REVALIDATE USER ON APP LOAD
+  useEffect(() => {
+    if (!accessToken) {
+      setUser(null);
+      setLoading(false);
+      return;
+    }
+
+    const fetchUser = async () => {
+      try {
+        const res = await api.get("/api/user-profile");
+        console.log(res)
+        setUser(res.data.data);
+      } catch (err) {
+        console.error("User validation failed", err);
+        // optional hard logout:
+        // setAccessTokenState(null);
+        // setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, [accessToken, api]);
+
+  // 6. SAFE TOKEN SETTER
+  const setAccessToken = (token) => {
+    setAccessTokenState(token);
+    if (!token) {
+      setUser(null);
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -54,7 +98,8 @@ export const AuthProvider = ({ children }) => {
         user,
         setUser,
         isAuthenticated,
-        api, 
+        api,
+        loading,
       }}
     >
       {children}
@@ -62,5 +107,10 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// Hook to use context
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+};

@@ -30,10 +30,12 @@ const AdminRegister = () => {
     try {
       const res = await axios.post(`${baseUrl}api/admin/register`, formData)
       console.log(res)
+      alert(res.data.message)
       navigate("/admin-login")
     } catch (err) {
       console.log(err)
       setLoading(false)
+      console.log(err.response.data.message)
     } finally {
       setLoading(false)
     }
@@ -90,7 +92,7 @@ const AdminRegister = () => {
               type={showPassword ? "text" : "password"}
               name="password"
               required
-              placeholder="Minimum 5 characters"
+              placeholder="Minimum 10 characters"
               value={formData.password}
               onChange={handleChange}
               className="w-full rounded-xl border px-4 py-3 pr-12"
