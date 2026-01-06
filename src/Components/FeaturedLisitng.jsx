@@ -5,7 +5,7 @@ const listings = [
   {
     id: 1,
     title: "Luxury 4 Bedroom Duplex",
-    location: "Lekki Phase 1, Lagos",
+    location: "Newark, NJ",
     price: "$250,000,000",
     type: "Residential",
     image:
@@ -14,7 +14,7 @@ const listings = [
   {
     id: 2,
     title: "Grade A Office Space",
-    location: "Victoria Island, Lagos",
+    location: "Newark, NJ",
     price: "$18,000,000 / year",
     type: "Commercial",
     image:
@@ -24,7 +24,7 @@ const listings = [
   {
     id: 3,
     title: "High Yield Apartment Block",
-    location: "Ikoyi, Lagos",
+    location: "Newark, NJ",
     price: "$1.2 Billion",
     type: "Investment",
     image:
@@ -34,7 +34,7 @@ const listings = [
     {
     id: 4,
     title: "Grade A Office Space",
-    location: "Victoria Island, Lagos",
+    location: "Newark, NJ",
     price: "$18,000,000 / year",
     type: "Commercial",
     image:
