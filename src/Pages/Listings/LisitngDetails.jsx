@@ -77,11 +77,11 @@ const ListingDetails = () => {
   };
 
   return (
-    <section className="bg-white text-slate-900 py-20 mt-20">
+    <section className="bg-white text-text-customBlue py-20 mt-20">
       <div className="mx-auto max-w-7xl px-6">
         {/* Property Header */}
         <div className="mb-10">
-          <h1 className="text-4xl font-bold lg:text-5xl">{property.title}</h1>
+          <h1 className="text-4xl font-bold lg:text-5xl text-customBlue">{property.title}</h1>
           <p className="mt-2 text-slate-600">
             {property.address +
               ", " +
@@ -91,10 +91,10 @@ const ListingDetails = () => {
               ", " +
               property.state}
           </p>
-          <p className="mt-2 text-xl font-semibold text-slate-900">
+          <p className="mt-2 text-xl font-semibold text-customBlue">
             {property.price}
           </p>
-          <p className="mt-1 text-slate-500">{property.propertyType}</p>
+          <p className="mt-1 text-slate-500 first-letter:uppercase">{property.propertyType}</p>
         </div>
 
         {/* Main Content */}
@@ -185,7 +185,7 @@ const ListingDetails = () => {
               />
               <button
                 type="submit"
-                className="w-full rounded-2xl bg-slate-900 px-6 py-3 text-white font-semibold transition hover:bg-slate-700"
+                className="w-full rounded-2xl bg-customBlue px-6 py-3 text-white font-semibold transition hover:bg-slate-700"
               >
                 Submit Inquiry
               </button>

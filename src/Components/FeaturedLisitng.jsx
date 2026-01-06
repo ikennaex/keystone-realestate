@@ -6,7 +6,7 @@ const listings = [
     id: 1,
     title: "Luxury 4 Bedroom Duplex",
     location: "Lekki Phase 1, Lagos",
-    price: "₦250,000,000",
+    price: "$250,000,000",
     type: "Residential",
     image:
       "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
@@ -15,7 +15,7 @@ const listings = [
     id: 2,
     title: "Grade A Office Space",
     location: "Victoria Island, Lagos",
-    price: "₦18,000,000 / year",
+    price: "$18,000,000 / year",
     type: "Commercial",
     image:
       "https://images.unsplash.com/photo-1497366216548-37526070297c",
@@ -25,7 +25,7 @@ const listings = [
     id: 3,
     title: "High Yield Apartment Block",
     location: "Ikoyi, Lagos",
-    price: "₦1.2 Billion",
+    price: "$1.2 Billion",
     type: "Investment",
     image:
       "https://images.unsplash.com/photo-1568605114967-8130f3a36994",
@@ -35,7 +35,7 @@ const listings = [
     id: 4,
     title: "Grade A Office Space",
     location: "Victoria Island, Lagos",
-    price: "₦18,000,000 / year",
+    price: "$18,000,000 / year",
     type: "Commercial",
     image:
       "https://images.unsplash.com/photo-1497366216548-37526070297c",

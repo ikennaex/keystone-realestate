@@ -5,6 +5,7 @@ import { useAuth } from "./AuthContext";
 
 const AdminAuthGuard = () => {
   const { loading, isAuthenticated, user } = useAuth();
+  console.log(user)
 
   // 1. Still resolving auth
   if (loading) {
@@ -16,7 +17,7 @@ const AdminAuthGuard = () => {
   }
 
   // 2. Auth resolved but not logged in
-  if (!isAuthenticated || user?.role !== "admin") {
+  if (!isAuthenticated && user?.role !== "admin") {
     return <Navigate to="/admin-login" replace />;
   }
 
