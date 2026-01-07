@@ -6,7 +6,7 @@ import { useParams } from "react-router";
 // const property = {
 //   title: "Luxury 3 Bedroom Apartment",
 //   location: "Lagos, Nigeria",
-//   price: "₦120,000,000",
+//   price: "$120,000,000",
 //   type: "Residential",
 //   photos: [
 //     "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg",

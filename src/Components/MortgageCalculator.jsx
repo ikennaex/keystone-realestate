@@ -37,7 +37,7 @@ const MortgageCalculator = () => {
           className="space-y-4 rounded-2xl border border-slate-200 bg-slate-50 p-8 shadow-md"
         >
           <div>
-            <label className="block mb-1 font-semibold">Home Price (₦)</label>
+            <label className="block mb-1 font-semibold">Home Price ($)</label>
             <input
               type="number"
               value={homePrice}
@@ -49,7 +49,7 @@ const MortgageCalculator = () => {
           </div>
 
           <div>
-            <label className="block mb-1 font-semibold">Down Payment (₦)</label>
+            <label className="block mb-1 font-semibold">Down Payment ($)</label>
             <input
               type="number"
               value={downPayment}
@@ -95,7 +95,7 @@ const MortgageCalculator = () => {
 
         {monthlyPayment !== null && (
           <div className="mt-6 rounded-2xl bg-slate-100 p-6 text-center text-lg font-semibold text-slate-900 shadow-md">
-            Estimated Monthly Payment: ₦{monthlyPayment.toFixed(2)}
+            Estimated Monthly Payment: ${monthlyPayment.toFixed(2)}
           </div>
         )}
       </div>
