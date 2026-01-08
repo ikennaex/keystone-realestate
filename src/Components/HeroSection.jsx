@@ -47,17 +47,17 @@ export default function HeroSection() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mt-10 flex flex-wrap gap-4"
         >
-            <Link to={"/listings"}>
-          <button className="rounded-2xl bg-white px-8 py-3 text-base font-semibold text-slate-900 transition hover:bg-slate-200">
-            Explore Properties
-          </button>
-            </Link>
+          <Link to={"/listings"}>
+            <button className="rounded-2xl bg-white px-8 py-3 text-base font-semibold text-slate-900 transition hover:bg-slate-200">
+              Explore Properties
+            </button>
+          </Link>
 
-            <Link to={"/contact"}>
-          <button className="rounded-2xl border border-white/30 px-8 py-3 text-base font-semibold text-white transition hover:bg-white/10">
-            Talk to an Expert
-          </button>
-            </Link>
+          <a href="mailto:info@keystonerealestatepartners.co">
+            <button className="rounded-2xl border border-white/30 px-8 py-3 text-base font-semibold text-white transition hover:bg-white/10">
+              Talk to an Expert
+            </button>
+          </a>
         </motion.div>
       </div>
     </section>

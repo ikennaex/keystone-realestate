@@ -2,36 +2,41 @@ import React, { useEffect, useState } from "react";
 import { PlusCircle, Edit, Trash2, Mail, LogOut } from "lucide-react";
 import { useAgentAuth } from "../../Contexts/AgentAuthContext";
 import { Link, useNavigate } from "react-router";
+import { div } from "framer-motion/client";
 
 const sampleProperties = [
-  {
-    id: 1,
-    title: "Luxury Apartment in Lekki",
-    price: "$45,000,000",
-    status: "available",
-    listingType: "sale",
-  },
-  {
-    id: 2,
-    title: "Shortlet Apartment - Ikoyi",
-    price: "$150,000 / night",
-    status: "unavailable",
-    listingType: "rent",
-  },
-  {
-    id: 3,
-    title: "Commercial Space - Victoria Island",
-    price: "$2,500,000 / year",
-    status: "sold",
-    listingType: "sale",
-  },
+  // {
+  //   id: 1,
+  //   title: "Luxury Apartment in Lekki",
+  //   price: "$45,000,000",
+  //   status: "available",
+  //   listingType: "sale",
+  // },
+  // {
+  //   id: 2,
+  //   title: "Shortlet Apartment - Ikoyi",
+  //   price: "$150,000 / night",
+  //   status: "unavailable",
+  //   listingType: "rent",
+  // },
+  // {
+  //   id: 3,
+  //   title: "Commercial Space - Victoria Island",
+  //   price: "$2,500,000 / year",
+  //   status: "sold",
+  //   listingType: "sale",
+  // },
 ];
 
 const AgentDashboard = () => {
-  const [properties] = useState(sampleProperties);
-  const { api, setAccessToken, setAgent, isAuthenticated } = useAgentAuth();
-  const [summary, setSummary] = useState({})
+  const [properties, setProperties] = useState([]);
+  const { api, setAccessToken, setAgent, isAuthenticated, agent } =
+    useAgentAuth();
+  const [summary, setSummary] = useState({});
   const navigate = useNavigate();
+  // const
+
+  console.log(agent);
 
   const handleLogout = async () => {
     try {
@@ -55,28 +60,95 @@ const AgentDashboard = () => {
     }
   };
 
-  const getSummary = async () => {
+  const getProperties = async () => {
     try {
-      const res = await api.get("api/agent/dashboard");
-      setSummary(res.data)
-      console.log(res);
+      const res = await api.get(`api/agents/${agent.id}/my-properties`);
+      // console.log(res);
+      setProperties(res.data.properties);
     } catch (err) {
       console.log(err);
     }
   };
 
+  const getSummary = async () => {
+    try {
+      const res = await api.get("api/agent/dashboard");
+      setSummary(res.data);
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  
+  const handleDelete = async (id) => {
+    try {
+      const res = await api.delete(`api/properties/${id}`)
+      console.log(res)
+      alert("Property Deleted Successfully")
+      getProperties()
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   useEffect(() => {
     getPropertyCount();
-    getSummary()
+    getSummary();
+    getProperties();
   }, []);
 
   if (!isAuthenticated) {
     navigate("/agent/login");
   }
 
+  const statusMessages = {
+    unverified: {
+      text: (
+        <>
+          You are not verified yet, upload verification media{" "}
+          <Link to="/agent/verification" className="underline font-bold">
+            here
+          </Link>
+          .
+        </>
+      ),
+      style: "bg-red-100 border-red-400 text-red-800",
+    },
+    verified: {
+      text: "Your account is verified. You can manage properties now.",
+      style: "bg-green-100 border-green-400 text-green-800",
+    },
+    pending: {
+      text: "Your submittion is pending.",
+      style: "bg-yellow-100 border-green-400 text-green-800",
+    },
+    rejected: {
+      text: (
+        <>
+          Your verification was rejected. Upload a valid ID{" "}
+          <Link to="/agent/verification" className="underline font-bold">
+            here
+          </Link>
+          .
+        </>
+      ),
+      style: "bg-yellow-100 border-yellow-400 text-yellow-800",
+    },
+  };
+
   return (
     <div className="min-h-screen bg-slate-100 mt-20">
       <div className="mx-auto max-w-7xl px-6 py-10">
+        {agent.status && statusMessages[agent.status] && (
+          <div
+            className={`mb-6 flex items-center justify-between rounded-xl px-6 py-4 shadow-sm ${
+              statusMessages[agent.status].style
+            }`}
+          >
+            <p className="font-semibold">{statusMessages[agent.status].text}</p>
+          </div>
+        )}
+
         {/* Header */}
         <div className="mb-10 flex flex-wrap items-center justify-between gap-6">
           <div>
@@ -120,7 +192,10 @@ const AgentDashboard = () => {
         {/* Stats */}
         <div className="mb-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <StatCard label="Total Properties" value={summary.properties} />
-          <StatCard label="Pending Enquiries" value={summary.propertiesWithInquiries} />
+          <StatCard
+            label="Pending Enquiries"
+            value={summary.propertiesWithInquiries}
+          />
         </div>
 
         {/* Property Management Table */}
@@ -143,12 +218,12 @@ const AgentDashboard = () => {
             </thead>
 
             <tbody>
-              {properties.map((property) => (
+              {properties?.map((property) => (
                 <tr key={property.id} className="hover:bg-slate-50">
                   <td className="border-b px-4 py-3 font-medium">
                     {property.title}
                   </td>
-                  <td className="border-b px-4 py-3">{property.price}</td>
+                  <td className="border-b px-4 py-3">${property.price}</td>
                   <td className="border-b px-4 py-3 capitalize">
                     {property.listingType}
                   </td>
@@ -160,7 +235,7 @@ const AgentDashboard = () => {
                       <button className="rounded-xl border p-2 hover:bg-slate-100">
                         <Edit size={16} />
                       </button>
-                      <button className="rounded-xl border p-2 hover:bg-red-50 text-red-600">
+                      <button onClick={() => handleDelete(property.id)} className="rounded-xl border p-2 hover:bg-red-50 text-red-600">
                         <Trash2 size={16} />
                       </button>
                     </div>

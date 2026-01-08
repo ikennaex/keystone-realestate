@@ -86,11 +86,11 @@ const Services = () => {
                   {service.description}
                 </p>
 
-                <div className="mt-6">
+                {/* <div className="mt-6">
                   <button className="text-sm font-semibold text-slate-900 underline-offset-4 hover:underline">
                     Learn More
                   </button>
-                </div>
+                </div> */}
               </div>
             );
           })}

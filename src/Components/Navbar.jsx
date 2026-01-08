@@ -16,11 +16,26 @@ const Navbar = () => {
 
         {/* Desktop Navigation */}
         <div className="hidden items-center gap-8 md:flex">
+
           <Link
             to="/listings"
             className="text-sm font-medium text-slate-700 hover:text-slate-900"
           >
             View Listings
+          </Link>
+
+          <Link
+            to="/services"
+            className="text-sm font-medium text-slate-700 hover:text-slate-900"
+          >
+            Services
+          </Link>
+
+          <Link
+            to="/buyers"
+            className="text-sm font-medium text-slate-700 hover:text-slate-900"
+          >
+            Buyers Page
           </Link>
 
           <Link
@@ -30,6 +45,13 @@ const Navbar = () => {
             Become an Agent
           </Link>
 
+          <Link
+            to="/user/login"
+            className="text-sm font-medium text-slate-700 hover:text-slate-900"
+          >
+            User login
+          </Link>
+
           {/* <a
             href="#agents"
             className="text-sm font-medium text-slate-700 hover:text-slate-900"
@@ -37,12 +59,12 @@ const Navbar = () => {
             Meet Agents
           </a> */}
 
-          <a
+          {/* <a
             href="#consultation"
             className="rounded-xl bg-customBlue px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800"
           >
             Schedule Consultation
-          </a>
+          </a> */}
         </div>
 
         {/* Mobile Menu Button */}
@@ -63,12 +85,29 @@ const Navbar = () => {
       {menuOpen && (
         <div className="border-t bg-white md:hidden">
           <div className="flex flex-col gap-4 px-6 py-6">
+
             <Link
               to="/listings"
               className="text-sm font-medium text-slate-700"
               onClick={() => setMenuOpen(false)}
             >
               View Listings
+            </Link>
+
+            <Link
+              to="/services"
+              className="text-sm font-medium text-slate-700"
+              onClick={() => setMenuOpen(false)}
+            >
+              Services
+            </Link>
+            
+            <Link
+              to="/buyers"
+              className="text-sm font-medium text-slate-700"
+              onClick={() => setMenuOpen(false)}
+            >
+              Buyers Page
             </Link>
 
             <Link
@@ -87,13 +126,13 @@ const Navbar = () => {
               Meet Agents
             </Link> */}
 
-            <Link
+            {/* <Link
               href="/contact"
               className="rounded-xl bg-customBlue px-5 py-3 text-center text-sm font-semibold text-white"
               onClick={() => setMenuOpen(false)}
             >
               Schedule Consultation
-            </Link>
+            </Link> */}
           </div>
         </div>
       )}

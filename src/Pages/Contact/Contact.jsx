@@ -90,12 +90,8 @@ const Contact = () => {
                 <p>17 Hobson street Newark NJ 07112</p>
               </div>
               <div className="flex items-center gap-3">
-                <Phone />
-                <p>+234 800 123 4567</p>
-              </div>
-              <div className="flex items-center gap-3">
                 <Mail />
-                <p>info@keystone.com</p>
+                <p>info@keystonerealestatepartners.co</p>
               </div>
             </div>
 
@@ -109,7 +105,7 @@ const Contact = () => {
             {/* Business Hours */}
             <div className="mt-6">
               <h3 className="mb-2 text-lg font-semibold">Business Hours</h3>
-              <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+              <p>Monday - Friday: 9:00 AM - 4:00 PM</p>
               <p>Saturday: 10:00 AM - 4:00 PM</p>
               <p>Sunday: Closed</p>
             </div>

@@ -17,7 +17,7 @@ const UserDashboard = () => {
             User Dashboard
           </h1>
           <p className="mt-2 text-slate-600">
-            Manage your properties, enquiries, and saved listings.
+            Manage your Enquires
           </p>
         </div>
 
@@ -67,7 +67,7 @@ const UserDashboard = () => {
         {/* Actions */}
         <div className="mt-12 grid gap-6 md:grid-cols-2">
           {/* Saved Properties */}
-          <div className="rounded-2xl bg-white p-6 shadow">
+          {/* <div className="rounded-2xl bg-white p-6 shadow">
             <h2 className="mb-4 text-xl font-semibold text-slate-900">
               Saved Properties
             </h2>
@@ -77,7 +77,7 @@ const UserDashboard = () => {
             <button className="rounded-xl bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-700">
               View Saved Listings
             </button>
-          </div>
+          </div> */}
 
           {/* Enquiries */}
           <div className="rounded-2xl bg-white p-6 shadow">

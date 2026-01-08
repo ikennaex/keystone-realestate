@@ -1,5 +1,6 @@
 import React from "react";
 import { CheckCircle, Home, CreditCard, Search, Handshake, Key } from "lucide-react";
+import { Link } from "react-router";
 
 const steps = [
   {
@@ -126,9 +127,12 @@ const BuyersPage = () => {
           <p className="mb-8 text-lg text-slate-600">
             Speak with our real estate experts to find your dream property today.
           </p>
+
+          <Link to={"/contact"}>
           <button className="rounded-2xl bg-customBlue px-8 py-4 text-white font-semibold transition hover:scale-105">
             Schedule Consultation
           </button>
+          </Link>
         </div>
       </div>
     </section>

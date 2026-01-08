@@ -11,6 +11,7 @@ import {
   Briefcase,
   Info,
 } from "lucide-react";
+import Newsletter from "./Newsletter";
 
 const Footer = () => {
   return (
@@ -19,16 +20,14 @@ const Footer = () => {
         {/* Top Grid */}
         <div className="grid gap-12 lg:grid-cols-5">
           {/* Brand / Map */}
-          <div>
-            <div className="my-4">
-              <img
-                className="h-16 rounded-xl"
-                src="images/logo.jpg"
-                alt="Keystone Logo"
-              />
-            </div>
+          <div className="space-y-4">
+            <img
+              className="h-16 rounded-xl"
+              src="images/logo.jpg"
+              alt="Keystone Logo"
+            />
 
-            <div className="mb-4 overflow-hidden rounded-2xl border border-white/10">
+            <div className="overflow-hidden rounded-2xl border border-white/10 shadow-lg">
               <iframe
                 title="Keystone Office Location"
                 src="https://www.google.com/maps?q=17+Hobson+Street+Newark+NJ+07112&output=embed"
@@ -38,48 +37,35 @@ const Footer = () => {
               />
             </div>
 
-            <div className="flex items-center gap-2 text-sm">
+            <div className="flex items-center gap-2 text-sm text-slate-300">
               <MapPin size={16} />
-              <span>17 Hobson street Newark NJ 07112</span>
+              <span>17 Hobson Street, Newark NJ 07112</span>
             </div>
           </div>
 
-          {/* Links Section */}
+          {/* Quick Links */}
           <div>
             <h4 className="mb-4 text-lg font-semibold text-white">
               Quick Links
             </h4>
-            <ul className="space-y-3 text-sm">
-              <li className="flex items-center gap-2">
-                <Home size={16} />
-                <a href="/" className="hover:text-white transition">
-                  Home
-                </a>
-              </li>
-              <li className="flex items-center gap-2">
-                <FileText size={16} />
-                <a href="/listings" className="hover:text-white transition">
-                  Listings
-                </a>
-              </li>
-              <li className="flex items-center gap-2">
-                <Users size={16} />
-                <a href="/about" className="hover:text-white transition">
-                  About Us
-                </a>
-              </li>
-              <li className="flex items-center gap-2">
-                <Briefcase size={16} />
-                <a href="/careers" className="hover:text-white transition">
-                  Careers
-                </a>
-              </li>
-              <li className="flex items-center gap-2">
-                <Info size={16} />
-                <a href="/contact" className="hover:text-white transition">
-                  Contact
-                </a>
-              </li>
+            <ul className="space-y-2 text-sm">
+              {[
+                { icon: Home, label: "Home", href: "/" },
+                { icon: FileText, label: "Listings", href: "/listings" },
+                { icon: Users, label: "About Us", href: "/about" },
+                { icon: Briefcase, label: "Careers", href: "/careers" },
+                { icon: Info, label: "Contact", href: "/contact" },
+              ].map(({ icon: Icon, label, href }) => (
+                <li key={label} className="flex items-center gap-2">
+                  <Icon size={16} />
+                  <a
+                    href={href}
+                    className="hover:text-white transition-colors duration-200"
+                  >
+                    {label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -88,28 +74,17 @@ const Footer = () => {
             <h4 className="mb-4 text-lg font-semibold text-white">
               Connect With Us
             </h4>
-            <div className="flex gap-4">
-              <a
-                href="#"
-                className="rounded-xl border border-white/10 p-3 transition hover:bg-white/10"
-                aria-label="Facebook"
-              >
-                <Facebook size={18} />
-              </a>
-              <a
-                href="#"
-                className="rounded-xl border border-white/10 p-3 transition hover:bg-white/10"
-                aria-label="Instagram"
-              >
-                <Instagram size={18} />
-              </a>
-              <a
-                href="#"
-                className="rounded-xl border border-white/10 p-3 transition hover:bg-white/10"
-                aria-label="LinkedIn"
-              >
-                <Linkedin size={18} />
-              </a>
+            <div className="flex gap-3">
+              {[Facebook, Instagram, Linkedin].map((Icon, i) => (
+                <a
+                  key={i}
+                  href="#"
+                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-slate-900 p-2 text-white transition hover:bg-emerald-600 hover:text-white"
+                  aria-label={Icon.name}
+                >
+                  <Icon size={18} />
+                </a>
+              ))}
             </div>
           </div>
 
@@ -118,30 +93,28 @@ const Footer = () => {
             <h4 className="mb-4 text-lg font-semibold text-white">
               Business Hours
             </h4>
-            <ul className="space-y-3 text-sm">
-              <li className="flex items-center gap-2">
-                <Clock size={16} />
-                <span>Monday – Friday: 9:00 AM – 4:00 PM</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <Clock size={16} />
-                <span>Saturday: 10:00 AM – 4:00 PM</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <Clock size={16} />
-                <span>Sunday: Closed</span>
-              </li>
+            <ul className="space-y-2 text-sm">
+              {[
+                "Monday – Friday: 9:00 AM – 4:00 PM",
+                "Saturday: 10:00 AM – 4:00 PM",
+                "Sunday: Closed",
+              ].map((hour, i) => (
+                <li key={i} className="flex items-center gap-2">
+                  <Clock size={16} />
+                  <span>{hour}</span>
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* Legal */}
           <div>
             <h4 className="mb-4 text-lg font-semibold text-white">Legal</h4>
-            <ul className="space-y-3 text-sm">
+            <ul className="space-y-2 text-sm">
               <li>
                 <a
                   href="/privacy-policy"
-                  className="hover:text-white transition"
+                  className="hover:text-white transition-colors duration-200"
                 >
                   Privacy Policy
                 </a>
@@ -149,13 +122,18 @@ const Footer = () => {
               <li>
                 <a
                   href="/terms-of-service"
-                  className="hover:text-white transition"
+                  className="hover:text-white transition-colors duration-200"
                 >
                   Terms of Service
                 </a>
               </li>
             </ul>
           </div>
+        </div>
+
+        {/* Newsletter */}
+        <div className="mt-12">
+          <Newsletter />
         </div>
 
         {/* Bottom Bar */}

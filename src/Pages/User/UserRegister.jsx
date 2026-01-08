@@ -14,6 +14,7 @@ const UserRegister = () => {
     email: "",
     password: "",
     phoneNumber: "",
+    role: "user"
   });
   const [showPassword, setShowPassword] = useState(false);
   //   const { api, setAccessToken, setAgent, isAuthenticated } = useAuth();
@@ -129,7 +130,7 @@ const UserRegister = () => {
             type="submit"
             className="w-full rounded-2xl bg-customBlue px-6 py-3 font-semibold text-white transition hover:bg-slate-700 disabled:bg-customBlue/50"
           >
-            {loading ? "Processing..." : "Login"}
+            {loading ? "Processing..." : "Register"}
           </button>
           {/* 
           <p className="text-center text-sm text-slate-500">
@@ -141,7 +142,7 @@ const UserRegister = () => {
           <p className="text-center text-sm text-slate-500">
             Already have an account?{" "}
             <Link to="/user/login" className="text-slate-900 underline">
-              Register
+              Login
             </Link>
           </p>
         </form>

@@ -67,7 +67,7 @@ export const AgentAuthProvider = ({ children }) => {
     const fetchAgent = async () => {
       try {
         const res = await api.get("/api/agent-profile");
-        setAgent(res.data.agent);
+        setAgent(res.data.data);
       } catch (err) {
         console.error("Agent validation failed", err);
         // // Hard logout only if token is invalid

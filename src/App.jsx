@@ -25,10 +25,15 @@ import UserLogin from "./Pages/User/UserLogin";
 import UserRegister from "./Pages/User/UserRegister";
 import AdminAuthGuard from "./Contexts/AdminAuthGuard";
 import AdminPublicGuard from "./Contexts/AdminPublicGuard";
+import ServicesPage from "./Pages/Services/ServicesPage";
+import AgentVerification from "./Pages/Agent/AgentVerification";
 
 const App = () => {
   return (
     <div>
+      {/* Hidden iframe for Mailchimp form submissions */}
+      <iframe name="hidden_iframe" style={{ display: "none" }}></iframe>
+      
       <ScrollToTop />
       <Navbar />
       <Routes>
@@ -39,6 +44,7 @@ const App = () => {
         <Route path="/buyers" element={<BuyersPage />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/careers" element={<Careers />} />
+        <Route path="/services" element={<ServicesPage />} />
 
         {/* User Routes */}
         <Route path="user">
@@ -58,13 +64,14 @@ const App = () => {
             <Route path="post-property" element={<PostProperty />} />
             <Route path="dashboard" element={<AgentDashboard />} />
             <Route path="enquiries" element={<AgentViewEnquiries />} />
+            <Route path="verification" element={<AgentVerification />} />
           </Route>
         </Route>
 
         {/* Admin Routes  */}
         <Route element={<AdminPublicGuard />}>
-        <Route path="/admin-register" element={<AdminRegister />} />
-        <Route path="/admin-login" element={<AdminLogin />} />
+          <Route path="/admin-register" element={<AdminRegister />} />
+          <Route path="/admin-login" element={<AdminLogin />} />
         </Route>
         <Route element={<AdminAuthGuard />}>
           <Route path="/admin-dashboard" element={<AdminDashboard />} />

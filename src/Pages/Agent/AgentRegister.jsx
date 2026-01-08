@@ -72,7 +72,7 @@ const AgentRegister = () => {
             <input
               type="email"
               name="email"
-              placeholder="gbailey@example.net"
+              placeholder="agent@example.net"
               value={formData.email}
               onChange={handleChange}
               className="w-full rounded-xl border px-4 py-3"
@@ -99,7 +99,7 @@ const AgentRegister = () => {
             <input
               type="tel"
               name="phoneNumber"
-              placeholder="1234567890"
+              placeholder=""
               value={formData.phoneNumber}
               onChange={handleChange}
               className="w-full rounded-xl border px-4 py-3"

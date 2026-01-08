@@ -20,7 +20,7 @@ const PostProperty = () => {
     bathrooms: 0,
     size: 0,
     address: "",
-    area: "",
+    // area: "",
     city: "",
     state: "",
   });
@@ -127,6 +127,7 @@ const PostProperty = () => {
           onSubmit={handleSubmit}
           className="grid gap-6 sm:gap-8 rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-6 lg:p-8 shadow-sm"
         >
+          {/* Title */}
           <div>
             <label className="mb-1 block font-semibold">Property Title</label>
             <input
@@ -141,6 +142,7 @@ const PostProperty = () => {
             />
           </div>
 
+          {/* Description */}
           <div>
             <label className="mb-1 block font-semibold">Description</label>
             <textarea
@@ -154,6 +156,7 @@ const PostProperty = () => {
             />
           </div>
 
+          {/* Price & Size */}
           <div className="grid gap-6 sm:grid-cols-2">
             <div>
               <label className="mb-1 block font-semibold">Price</label>
@@ -168,9 +171,7 @@ const PostProperty = () => {
             </div>
 
             <div>
-              <label className="mb-1 block font-semibold">
-                Property Size (sqm)
-              </label>
+              <label className="mb-1 block font-semibold">Property Size (sqm)</label>
               <input
                 type="number"
                 name="size"
@@ -181,109 +182,140 @@ const PostProperty = () => {
             </div>
           </div>
 
+          {/* Property Type & Listing Type */}
           <div className="grid gap-6 sm:grid-cols-2">
-            <select
-              name="propertyType"
-              required
-              value={formData.propertyType}
-              onChange={handleChange}
-              className="w-full rounded-xl border px-3 py-2.5 sm:px-4 sm:py-3"
-            >
-              <option value="">Select property type</option>
-              <option value="house">House</option>
-              <option value="apartment">Apartment</option>
-              <option value="shortlet">Shortlet</option>
-              <option value="penthouse">Penthouse</option>
-              <option value="land">Land</option>
-              <option value="commercial">Commercial</option>
-            </select>
+            <div>
+              <label className="mb-1 block font-semibold">Property Type</label>
+              <select
+                name="propertyType"
+                required
+                value={formData.propertyType}
+                onChange={handleChange}
+                className="w-full rounded-xl border px-3 py-2.5 sm:px-4 sm:py-3"
+              >
+                <option value="">Select property type</option>
+                <option value="house">House</option>
+                <option value="apartment">Apartment</option>
+                <option value="shortlet">Shortlet</option>
+                <option value="penthouse">Penthouse</option>
+                <option value="land">Land</option>
+                <option value="commercial">Commercial</option>
+              </select>
+            </div>
 
-            <select
-              name="listingType"
-              required
-              value={formData.listingType}
-              onChange={handleChange}
-              className="w-full rounded-xl border px-3 py-2.5 sm:px-4 sm:py-3"
-            >
-              <option value="">Select listing type</option>
-              <option value="sale">Sale</option>
-              <option value="rent">Rent</option>
-            </select>
+            <div>
+              <label className="mb-1 block font-semibold">Listing Type</label>
+              <select
+                name="listingType"
+                required
+                value={formData.listingType}
+                onChange={handleChange}
+                className="w-full rounded-xl border px-3 py-2.5 sm:px-4 sm:py-3"
+              >
+                <option value="">Select listing type</option>
+                <option value="sale">Sale</option>
+                <option value="rent">Rent</option>
+              </select>
+            </div>
           </div>
 
+          {/* Status, Bedrooms & Bathrooms */}
           <div className="grid gap-6 sm:grid-cols-3">
-            <select
-              name="status"
-              value={formData.status}
-              onChange={handleChange}
-              className="w-full rounded-xl border px-3 py-2.5 sm:px-4 sm:py-3"
-            >
-              <option value="available">Available</option>
-              <option value="sold">Sold</option>
-              <option value="unavailable">Unavailable</option>
-            </select>
+            <div>
+              <label className="mb-1 block font-semibold">Status</label>
+              <select
+                name="status"
+                value={formData.status}
+                onChange={handleChange}
+                className="w-full rounded-xl border px-3 py-2.5 sm:px-4 sm:py-3"
+              >
+                <option value="available">Available</option>
+                <option value="sold">Sold</option>
+                <option value="unavailable">Unavailable</option>
+              </select>
+            </div>
 
-            <input
-              type="number"
-              name="bedrooms"
-              placeholder="Bedrooms"
-              value={formData.bedrooms}
-              onChange={handleChange}
-              className="w-full rounded-xl border px-3 py-2.5 sm:px-4 sm:py-3"
-            />
+            <div>
+              <label className="mb-1 block font-semibold">Bedrooms</label>
+              <input
+                type="number"
+                name="bedrooms"
+                placeholder="Bedrooms"
+                value={formData.bedrooms}
+                onChange={handleChange}
+                className="w-full rounded-xl border px-3 py-2.5 sm:px-4 sm:py-3"
+              />
+            </div>
 
+            <div>
+              <label className="mb-1 block font-semibold">Bathrooms</label>
+              <input
+                type="number"
+                name="bathrooms"
+                placeholder="Bathrooms"
+                value={formData.bathrooms}
+                onChange={handleChange}
+                className="w-full rounded-xl border px-3 py-2.5 sm:px-4 sm:py-3"
+              />
+            </div>
+          </div>
+
+          {/* Address */}
+          <div>
+            <label className="mb-1 block font-semibold">Address</label>
             <input
-              type="number"
-              name="bathrooms"
-              placeholder="Bathrooms"
-              value={formData.bathrooms}
+              type="text"
+              name="address"
+              required
+              placeholder="Address"
+              value={formData.address}
               onChange={handleChange}
               className="w-full rounded-xl border px-3 py-2.5 sm:px-4 sm:py-3"
             />
           </div>
 
-          <input
-            type="text"
-            name="address"
-            required
-            placeholder="Address"
-            value={formData.address}
-            onChange={handleChange}
-            className="w-full rounded-xl border px-3 py-2.5 sm:px-4 sm:py-3"
-          />
-
+          {/* Area, City, State */}
           <div className="grid gap-6 sm:grid-cols-3">
-            <input
-              type="text"
-              name="area"
-              required
-              placeholder="Area"
-              value={formData.area}
-              onChange={handleChange}
-              className="rounded-xl border px-3 py-2.5 sm:px-4 sm:py-3"
-            />
-            <input
-              type="text"
-              name="city"
-              required
-              placeholder="City"
-              value={formData.city}
-              onChange={handleChange}
-              className="rounded-xl border px-3 py-2.5 sm:px-4 sm:py-3"
-            />
-            <input
-              type="text"
-              name="state"
-              required
-              placeholder="State"
-              value={formData.state}
-              onChange={handleChange}
-              className="rounded-xl border px-3 py-2.5 sm:px-4 sm:py-3"
-            />
+            {/* <div>
+              <label className="mb-1 block font-semibold">Area</label>
+              <input
+                type="text"
+                name="area"
+                required
+                placeholder="Area"
+                value={formData.area}
+                onChange={handleChange}
+                className="rounded-xl border px-3 py-2.5 sm:px-4 sm:py-3"
+              />
+            </div> */}
+            <div>
+              <label className="mb-1 block font-semibold">City</label>
+              <input
+                type="text"
+                name="city"
+                required
+                placeholder="City"
+                value={formData.city}
+                onChange={handleChange}
+                className="rounded-xl border px-3 py-2.5 sm:px-4 sm:py-3"
+              />
+            </div>
+            <div>
+              <label className="mb-1 block font-semibold">State</label>
+              <input
+                type="text"
+                name="state"
+                required
+                placeholder="State"
+                value={formData.state}
+                onChange={handleChange}
+                className="rounded-xl border px-3 py-2.5 sm:px-4 sm:py-3"
+              />
+            </div>
           </div>
 
+          {/* Images */}
           <label className="mb-1 block font-semibold">Property Images</label>
-
           <input
             type="file"
             multiple
@@ -308,9 +340,8 @@ const PostProperty = () => {
             </div>
           )}
 
-          <label className="mb-1 block font-semibold">
-            Property Video (Optional)
-          </label>
+          {/* Video */}
+          <label className="mb-1 block font-semibold">Property Video (Optional)</label>
           <input
             type="file"
             accept="video/*"
