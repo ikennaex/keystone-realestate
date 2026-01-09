@@ -138,7 +138,7 @@ const ListingDetails = () => {
 
           {/* Inquiry Section */}
           <div className="rounded-2xl border border-slate-200 bg-slate-50 p-8 shadow-sm lg:sticky lg:top-24 h-fit">
-            {user.role === "user" ? (
+            {user?.role === "user" ? (
               <>
                 <h2 className="mb-6 text-2xl font-semibold">
                   Inquire About This Listing
