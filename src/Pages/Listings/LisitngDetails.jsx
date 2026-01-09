@@ -70,10 +70,10 @@ const ListingDetails = () => {
           </h1>
           <p className="mt-2 text-slate-600">
             {property.address}, {property.area}, {property.city},{" "}
-            {property.state}
+            {property.state} {property.postalCode}
           </p>
           <p className="mt-3 text-xl font-semibold text-customBlue">
-            {property.price}
+            ${property.price}
           </p>
           <p className="mt-1 text-slate-500 capitalize">
            <span className="font-semibold">Property type:</span> {property.propertyType}

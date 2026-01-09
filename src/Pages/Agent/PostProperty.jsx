@@ -20,7 +20,7 @@ const PostProperty = () => {
     bathrooms: 0,
     size: 0,
     address: "",
-    // area: "",
+    postalCode: "",
     city: "",
     state: "",
   });
@@ -276,18 +276,18 @@ const PostProperty = () => {
 
           {/* Area, City, State */}
           <div className="grid gap-6 sm:grid-cols-3">
-            {/* <div>
-              <label className="mb-1 block font-semibold">Area</label>
+            <div>
+              <label className="mb-1 block font-semibold">Postal Code</label>
               <input
                 type="text"
-                name="area"
+                name="postalCode"
                 required
-                placeholder="Area"
-                value={formData.area}
+                placeholder="Postal Code"
+                value={formData.postalCode}
                 onChange={handleChange}
                 className="rounded-xl border px-3 py-2.5 sm:px-4 sm:py-3"
               />
-            </div> */}
+            </div>
             <div>
               <label className="mb-1 block font-semibold">City</label>
               <input

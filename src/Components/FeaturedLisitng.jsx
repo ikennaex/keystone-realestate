@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
+import { baseUrl } from "../baseUrl";
+import axios from "axios";
 
 const listings = [
   // {
@@ -41,6 +43,26 @@ const listings = [
 ];
 
 const FeaturedListing = () => {
+  const [properties, setProperties] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const getListings = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(`${baseUrl}api/properties`);
+      setProperties(response.data.data || []);
+      console.log(response.data.data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getListings()
+  }, [])
+
   return (
     <section className="bg-slate-50 py-20">
       <div className="mx-auto max-w-7xl px-6">
@@ -56,9 +78,9 @@ const FeaturedListing = () => {
         </div>
 
         {/* Listings Grid */}
-        {listings && listings.length > 0 ? (
+        {properties && properties.length > 0 ? (
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {listings.map((listing) => (
+            {properties.map((listing) => (
               <div
                 key={listing.id}
                 className="group overflow-hidden rounded-2xl bg-white shadow-sm transition hover:shadow-lg"
@@ -66,7 +88,7 @@ const FeaturedListing = () => {
                 {/* Image */}
                 <div className="relative h-56 overflow-hidden">
                   <img
-                    src={listing.image}
+                    src={listing?.media[0]?.url}
                     alt={listing.title}
                     className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
                   />
@@ -87,12 +109,14 @@ const FeaturedListing = () => {
 
                   <div className="mt-4 flex items-center justify-between">
                     <span className="text-lg font-bold text-slate-900">
-                      {listing.price}
+                      ${listing.price}
                     </span>
 
+                    <Link to={`/listings/${listing.id}`} key={listing.id}>
                     <button className="rounded-xl border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-900 hover:text-white">
                       View Details
                     </button>
+                    </Link>
                   </div>
                 </div>
               </div>

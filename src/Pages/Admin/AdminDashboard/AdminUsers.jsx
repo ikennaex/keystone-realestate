@@ -2,8 +2,8 @@ import React from "react";
 
 // Sample data
 const sampleUsers = [
-  { id: 1, name: "Ikenna Akano", email: "ikenna@example.com", role: "user" },
-  { id: 2, name: "Adaobi Eze", email: "adaobi@example.com", role: "user" },
+  // { id: 1, name: "Ikenna Akano", email: "ikenna@example.com", role: "user" },
+  // { id: 2, name: "Adaobi Eze", email: "adaobi@example.com", role: "user" },
 ];
 
 const AdminUsers = () => {
