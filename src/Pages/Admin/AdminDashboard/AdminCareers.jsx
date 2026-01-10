@@ -71,7 +71,7 @@ const AdminCareers = () => {
           }}
         />
         {/* <input type="date" onChange={(e) => {setApplication_deadline(e.target.value)}} /> */}
-        <button className="rounded-2xl bg-slate-900 px-6 py-3 text-white font-semibold hover:bg-slate-700">
+        <button className="rounded-2xl bg-customBlue px-6 py-3 text-white font-semibold hover:bg-slate-700">
           Post Career
         </button>
       </form>

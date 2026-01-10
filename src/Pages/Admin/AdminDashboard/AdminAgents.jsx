@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../../Contexts/AuthContext";
 
-
 const AdminAgents = () => {
-    const { api } = useAuth();
-    const [agents, setAgents] = useState([]);
+  const { api } = useAuth();
+  const [agents, setAgents] = useState([]);
+  
   const verifiedAgents = async () => {
     try {
       const res = await api.get("api/admin/agents/verified");
@@ -18,7 +18,6 @@ const AdminAgents = () => {
   useEffect(() => {
     verifiedAgents();
   }, []);
-
 
   return (
     <div className="overflow-x-auto rounded-2xl bg-white shadow p-6">

@@ -83,7 +83,7 @@ const AgentDashboard = () => {
   
   const handleDelete = async (id) => {
     try {
-      const res = await api.delete(`api/properties/${id}`)
+      const res = await api.delete(`api/my-properties/${id}`)
       console.log(res)
       alert("Property Deleted Successfully")
       getProperties()

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useAuth } from "../../../Contexts/AuthContext";
 
 // Sample data
 const sampleUsers = [
@@ -7,6 +8,23 @@ const sampleUsers = [
 ];
 
 const AdminUsers = () => {
+  const { api } = useAuth();
+  const [users, setUser] = useState([]);
+
+  const getUsers = async () => {
+    try {
+      const res = await api.get("api/admin/users");
+      console.log(res);
+      setUser(res.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
   return (
     <div className="overflow-x-auto rounded-2xl bg-white shadow p-6">
       <h2 className="mb-6 text-2xl font-semibold">All Users</h2>

@@ -87,7 +87,7 @@ const AgentViewEnquiries = () => {
                   ) : (
                     <button
                       onClick={() => markAsContacted(enquiry.id)}
-                      className="rounded-2xl bg-slate-900 px-5 py-2 text-sm font-semibold text-white transition hover:bg-slate-700"
+                      className="rounded-2xl bg-customBlue px-5 py-2 text-sm font-semibold text-white transition hover:bg-slate-700"
                     >
                       Mark as Contacted
                     </button>

@@ -81,7 +81,7 @@ const BuyersPage = () => {
                 key={index}
                 className="min-w-[250px] rounded-2xl border border-slate-200 bg-slate-50 p-6 shadow-sm transition hover:shadow-lg flex flex-col items-center text-center"
               >
-                <div className="mb-4 rounded-full bg-slate-900 p-4 text-white">{step.icon}</div>
+                <div className="mb-4 rounded-full bg-customBlue p-4 text-white">{step.icon}</div>
                 <h3 className="mb-2 text-lg font-semibold">{step.title}</h3>
                 <p className="text-slate-600">{step.description}</p>
               </div>
@@ -128,11 +128,13 @@ const BuyersPage = () => {
             Speak with our real estate experts to find your dream property today.
           </p>
 
-          <Link to={"/contact"}>
+          {/* <Link to={"/contact"}> */}
+          <a href="mailto:info@keystonerealestatepartners.co">
           <button className="rounded-2xl bg-customBlue px-8 py-4 text-white font-semibold transition hover:scale-105">
             Schedule Consultation
           </button>
-          </Link>
+          </a>
+          {/* </Link> */}
         </div>
       </div>
     </section>

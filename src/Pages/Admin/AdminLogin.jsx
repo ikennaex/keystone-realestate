@@ -95,7 +95,7 @@ const AdminLogin = () => {
           <button
             disabled={loading}
             type="submit"
-            className="w-full rounded-2xl bg-slate-900 px-6 py-3 font-semibold text-white transition hover:bg-slate-700"
+            className="w-full rounded-2xl bg-customBlue px-6 py-3 font-semibold text-white transition hover:bg-slate-700"
           >
             {loading ? "Processing..." : "Login"}
           </button>

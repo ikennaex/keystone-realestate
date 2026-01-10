@@ -3,7 +3,7 @@ import Loader from "../Components/Loaders/Loader";
 import { Outlet } from "react-router";
 import { useAuth } from "./AuthContext";
 
-const AdminAuthGuard = () => {
+const UserAuthGuard = () => {
   const { loading, isAuthenticated, user } = useAuth();
   console.log(user)
 
@@ -17,12 +17,12 @@ const AdminAuthGuard = () => {
   }
 
   // 2. Auth resolved but not logged in
-if (!isAuthenticated || user?.role !== "admin") {
-  return <Navigate to="/admin-login" replace />;
+if (!isAuthenticated || user?.role !== "user") {
+  return <Navigate to="/user/login" replace />;
 }
 
   // Auth resolved and valid
   return <Outlet />;
 };
 
-export default AdminAuthGuard;
+export default UserAuthGuard;

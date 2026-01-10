@@ -24,10 +24,14 @@ import AgentPublicGuard from "./Contexts/AgentPublicGuard";
 import UserLogin from "./Pages/User/UserLogin";
 import UserRegister from "./Pages/User/UserRegister";
 import AdminAuthGuard from "./Contexts/AdminAuthGuard";
+import UserAuthGuard from "./Contexts/UserAuthGuard";
 import AdminPublicGuard from "./Contexts/AdminPublicGuard";
 import ServicesPage from "./Pages/Services/ServicesPage";
 import AgentVerification from "./Pages/Agent/AgentVerification";
 import UserEnquiries from "./Pages/User/UserEnquiries";
+import UserPublicGuard from "./Contexts/UserPublicGuard";
+import Blog from "./Pages/Blog/Blog";
+import BlogDetails from "./Pages/Blog/BlogDetails";
 
 const App = () => {
   return (
@@ -46,13 +50,21 @@ const App = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/careers" element={<Careers />} />
         <Route path="/services" element={<ServicesPage />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:id" element={<BlogDetails />} />
 
         {/* User Routes */}
         <Route path="user">
+          <Route element={<UserAuthGuard />}>
           <Route path="dashboard" element={<UserDashboard />} />
+          <Route path="inquiries" element={<UserEnquiries />} />
+          </Route>
+
+
+          <Route element={<UserPublicGuard />}>
           <Route path="login" element={<UserLogin />} />
           <Route path="register" element={<UserRegister />} />
-          <Route path="inquiries" element={<UserEnquiries />} />
+          </Route>
         </Route>
 
         {/* Agent Routes */}

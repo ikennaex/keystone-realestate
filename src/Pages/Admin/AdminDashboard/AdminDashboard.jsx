@@ -1,10 +1,18 @@
-import React, { useState } from "react";
-import { Users, UserCheck, Briefcase, FileText, AlertCircle } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import {
+  Users,
+  UserCheck,
+  Briefcase,
+  FileText,
+  AlertCircle,
+  House,
+} from "lucide-react";
 import AdminUsers from "./AdminUsers";
 import AdminAgents from "./AdminAgents";
 import AdminPendingVerification from "./AdminPendingVerification";
 import AdminCareers from "./AdminCareers";
 import AdminApplications from "./AdminApplications";
+import { useAuth } from "../../../Contexts/AuthContext";
 
 // Sample data
 const sampleUsers = [
@@ -13,54 +21,111 @@ const sampleUsers = [
 ];
 
 const sampleAgents = [
-  { id: 1, name: "Chinedu Okeke", email: "chinedu@example.com", phone: "08012345678", status: "verified" },
-  { id: 2, name: "Oluchi Nwosu", email: "oluchi@example.com", phone: "08098765432", status: "pending" },
-  { id: 3, name: "Adaobi Chukwu", email: "adaobi@example.com", phone: "08011223344", status: "pending" },
+  {
+    id: 1,
+    name: "Chinedu Okeke",
+    email: "chinedu@example.com",
+    phone: "08012345678",
+    status: "verified",
+  },
+  {
+    id: 2,
+    name: "Oluchi Nwosu",
+    email: "oluchi@example.com",
+    phone: "08098765432",
+    status: "pending",
+  },
+  {
+    id: 3,
+    name: "Adaobi Chukwu",
+    email: "adaobi@example.com",
+    phone: "08011223344",
+    status: "pending",
+  },
 ];
 
 const sampleApplications = [
-  { id: 1, name: "John Doe", roleApplied: "Frontend Developer", email: "john@example.com" },
-  { id: 2, name: "Jane Smith", roleApplied: "Backend Developer", email: "jane@example.com" },
+  {
+    id: 1,
+    name: "John Doe",
+    roleApplied: "Frontend Developer",
+    email: "john@example.com",
+  },
+  {
+    id: 2,
+    name: "Jane Smith",
+    roleApplied: "Backend Developer",
+    email: "jane@example.com",
+  },
 ];
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState("overview");
 
-  const pendingAgents = sampleAgents.filter(agent => agent.status === "pending");
+  const pendingAgents = sampleAgents.filter(
+    (agent) => agent.status === "pending"
+  );
+
+  const { api } = useAuth();
+  const [stats, setStats] = useState([]);
+
+  const getStats = async () => {
+    try {
+      const res = await api.get("api/admin/dashboard");
+      console.log(res);
+      setStats(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getStats();
+  }, []);
 
   return (
     <div className="flex min-h-screen bg-slate-100 mt-20">
       {/* Sidebar */}
-      <aside className="w-64 bg-slate-900 text-white flex-shrink-0">
+      <aside className="w-64 bg-customBlue text-white flex-shrink-0">
         <div className="p-6 text-2xl font-bold">Admin Panel</div>
         <nav className="mt-10 space-y-2">
           <button
             onClick={() => setActiveTab("overview")}
-            className={`w-full text-left px-6 py-3 hover:bg-slate-700 transition ${activeTab === "overview" ? "bg-slate-700" : ""}`}
+            className={`w-full text-left px-6 py-3 hover:bg-slate-700 transition ${
+              activeTab === "overview" ? "bg-customBlue" : ""
+            }`}
           >
             Overview
           </button>
           <button
             onClick={() => setActiveTab("users")}
-            className={`w-full text-left px-6 py-3 hover:bg-slate-700 transition ${activeTab === "users" ? "bg-slate-700" : ""}`}
+            className={`w-full text-left px-6 py-3 hover:bg-slate-700 transition ${
+              activeTab === "users" ? "bg-slate-700" : ""
+            }`}
           >
             Users
           </button>
           <button
             onClick={() => setActiveTab("agents")}
-            className={`w-full text-left px-6 py-3 hover:bg-slate-700 transition ${activeTab === "agents" ? "bg-slate-700" : ""}`}
+            className={`w-full text-left px-6 py-3 hover:bg-slate-700 transition ${
+              activeTab === "agents" ? "bg-customBlue" : ""
+            }`}
           >
             Agents
           </button>
           <button
             onClick={() => setActiveTab("pendingAgents")}
-            className={`w-full text-left px-6 py-3 hover:bg-slate-700 transition ${activeTab === "pendingAgents" ? "bg-slate-700" : ""}`}
+            className={`w-full text-left px-6 py-3 hover:bg-slate-700 transition ${
+              activeTab === "pendingAgents" ? "bg-customBlue" : ""
+            }`}
           >
             Pending Verification
           </button>
           <button
             onClick={() => setActiveTab("careers")}
-            className={`w-full text-left px-6 py-3 hover:bg-slate-700 transition ${activeTab === "careers" ? "bg-slate-700" : ""}`}
+            className={`w-full text-left px-6 py-3 hover:bg-slate-700 transition ${
+              activeTab === "careers" ? "bg-customBlue" : ""
+            }`}
           >
             Careers
           </button>
@@ -82,21 +147,28 @@ const AdminDashboard = () => {
               <Users size={32} className="text-slate-900" />
               <div>
                 <p className="text-slate-400 text-sm">Total Users</p>
-                <p className="text-2xl font-bold">{sampleUsers.length}</p>
+                <p className="text-2xl font-bold">{stats.totalUsers}</p>
               </div>
             </div>
             <div className="rounded-2xl bg-white p-6 shadow flex items-center gap-4">
               <UserCheck size={32} className="text-slate-900" />
               <div>
-                <p className="text-slate-400 text-sm">Total Agents</p>
-                <p className="text-2xl font-bold">{sampleAgents.length}</p>
+                <p className="text-slate-400 text-sm">Verified Agents</p>
+                <p className="text-2xl font-bold">{stats.approved}</p>
               </div>
             </div>
             <div className="rounded-2xl bg-white p-6 shadow flex items-center gap-4">
               <AlertCircle size={32} className="text-slate-900" />
               <div>
                 <p className="text-slate-400 text-sm">Pending Verification</p>
-                <p className="text-2xl font-bold">{pendingAgents.length}</p>
+                <p className="text-2xl font-bold">{stats.pending}</p>
+              </div>
+            </div>
+            <div className="rounded-2xl bg-white p-6 shadow flex items-center gap-4">
+              <House size={32} className="text-slate-900" />
+              <div>
+                <p className="text-slate-400 text-sm">Properties Posted</p>
+                <p className="text-2xl font-bold">{stats.totalProperties}</p>
               </div>
             </div>
             <div className="rounded-2xl bg-white p-6 shadow flex items-center gap-4">
@@ -110,36 +182,28 @@ const AdminDashboard = () => {
               <FileText size={32} className="text-slate-900" />
               <div>
                 <p className="text-slate-400 text-sm">Applications</p>
-                <p className="text-2xl font-bold">{sampleApplications.length}</p>
+                <p className="text-2xl font-bold">
+                  {sampleApplications.length}
+                </p>
               </div>
             </div>
           </div>
         )}
 
         {/* Users Table */}
-        {activeTab === "users" && (
-          <AdminUsers />
-        )}
+        {activeTab === "users" && <AdminUsers />}
 
         {/* Agents Table */}
-        {activeTab === "agents" && (
-          <AdminAgents />
-        )}
+        {activeTab === "agents" && <AdminAgents />}
 
         {/* Pending Agents Table */}
-        {activeTab === "pendingAgents" && (
-          <AdminPendingVerification />
-        )}
+        {activeTab === "pendingAgents" && <AdminPendingVerification />}
 
         {/* Careers Form */}
-        {activeTab === "careers" && (
-          <AdminCareers />
-        )}
+        {activeTab === "careers" && <AdminCareers />}
 
         {/* Applications Table */}
-        {activeTab === "applications" && (
-          <AdminApplications />
-        )}
+        {activeTab === "applications" && <AdminApplications />}
       </main>
     </div>
   );
