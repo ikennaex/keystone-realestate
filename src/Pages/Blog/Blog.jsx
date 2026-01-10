@@ -11,27 +11,7 @@ const blogPosts = [
       "https://images.unsplash.com/photo-1560518883-ce09059eeffa",
     date: "Jan 12, 2026",
     readTime: "5 min read",
-  },
-  {
-    id: 2,
-    title: "Real Estate Investment Tips for First-Time Buyers",
-    excerpt:
-      "New to real estate investing? These tips will help you avoid costly mistakes.",
-    image:
-      "https://images.unsplash.com/photo-1560185127-6ed189bf02f4",
-    date: "Jan 5, 2026",
-    readTime: "4 min read",
-  },
-  {
-    id: 3,
-    title: "Renting vs Buying: What Makes Sense Right Now?",
-    excerpt:
-      "We break down the pros and cons of renting versus buying in today’s market.",
-    image:
-      "https://images.unsplash.com/photo-1568605114967-8130f3a36994",
-    date: "Dec 28, 2025",
-    readTime: "6 min read",
-  },
+  }
 ];
 
 const Blog = () => {
