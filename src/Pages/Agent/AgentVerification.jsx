@@ -49,7 +49,7 @@ const AgentVerification = () => {
       <div className="mx-auto max-w-3xl px-6">
         <h1 className="text-3xl font-bold mb-4">Agent Verification</h1>
         <p className="mb-8 text-slate-600">
-          Upload a valid identification document (ID card, Passport, or Driver's License) to verify your agent account.
+          Upload a valid identification document (Real Estate License ) to verify your agent account.
         </p>
 
         <form
