@@ -118,6 +118,14 @@ const Navbar = () => {
               Become an Agent
             </Link>
 
+            <Link
+              to="/user/login"
+              className="text-sm font-medium text-slate-700"
+              onClick={() => setMenuOpen(false)}
+            >
+              User Login
+            </Link>
+
             {/* <Link
               href="#agents"
               className="text-sm font-medium text-slate-700"

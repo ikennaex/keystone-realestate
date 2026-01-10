@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { Link, useNavigate } from "react-router";
 import { useAuth } from "../../Contexts/AuthContext";
+import { p } from "framer-motion/m";
 
 const UserLogin = () => {
   const navigate = useNavigate();
@@ -22,8 +23,8 @@ const UserLogin = () => {
     setLoading(true);
     e.preventDefault();
     try {
-        const res = await api.post(`api/auth/login`, formData);
-        console.log(res);
+      const res = await api.post(`api/auth/login`, formData);
+      console.log(res);
       setAccessToken(res.data.token);
       setUser(res.data.user);
       alert(res.data.message);
@@ -37,6 +38,7 @@ const UserLogin = () => {
     }
   };
 
+
   // if (isAuthenticated) {
   //   navigate("/agent/dashboard")
   // }
@@ -46,9 +48,7 @@ const UserLogin = () => {
       <div className="mx-auto max-w-md px-6">
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold lg:text-4xl">User Login</h1>
-          <p className="mt-2 text-slate-600">
-            Access your dashboard
-          </p>
+          <p className="mt-2 text-slate-600">Access your dashboard</p>
         </div>
 
         <form
@@ -110,7 +110,7 @@ const UserLogin = () => {
           </p>
           <p className="text-center text-sm text-slate-500">
             New to Keystone?{" "}
-            <Link to = "/user/register" className="text-slate-900 underline">
+            <Link to="/user/register" className="text-slate-900 underline">
               Register
             </Link>
           </p>

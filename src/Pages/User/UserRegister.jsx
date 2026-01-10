@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { Link, useNavigate } from "react-router";
 import { useAgentAuth } from "../../Contexts/AgentAuthContext";
@@ -14,9 +14,10 @@ const UserRegister = () => {
     email: "",
     password: "",
     phoneNumber: "",
-    role: "user"
+    role: "user",
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
   //   const { api, setAccessToken, setAgent, isAuthenticated } = useAuth();
 
   const handleChange = (e) => {
@@ -34,6 +35,7 @@ const UserRegister = () => {
       console.log(res);
     } catch (err) {
       setLoading(false);
+      setError(err.response.data.errors.password[0]);
       alert(err.response.data.message || "Register failed");
       console.log(err);
     } finally {
@@ -44,6 +46,17 @@ const UserRegister = () => {
   // if (isAuthenticated) {
   //   navigate("/agent/dashboard")
   // }
+
+  // error timer 
+  useEffect(() => {
+    if (!error) return;
+
+    const timer = setTimeout(() => {
+      setError(null);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, [error]);
 
   return (
     <section className="bg-white py-20 mt-20 text-slate-900">
@@ -114,6 +127,8 @@ const UserRegister = () => {
                 min={10}
                 className="w-full rounded-xl border px-4 py-3 pr-12 focus:ring-2 focus:ring-slate-500"
               />
+
+              {error && <p className="text-red-700 text-sm">{error}</p>}
 
               <button
                 type="button"
