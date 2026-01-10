@@ -16,11 +16,21 @@ const ListingDetails = () => {
   const [mainImage, setMainImage] = useState("");
   const [formData, setFormData] = useState({
     name: "",
-    email: { userEmail },
+    email: "",
     phoneNumber: "",
     description: "",
     appointmentDate: "",
   });
+
+  // AUTO SET EMAIL
+  useEffect(() => {
+    if (user?.email) {
+      setFormData((prev) => ({
+        ...prev,
+        email: user.email,
+      }));
+    }
+  }, [user]);
 
   const getPropertyDetails = async () => {
     try {
@@ -64,7 +74,7 @@ const ListingDetails = () => {
       const res = await api.post(`api/inquiries/${id}`, formData);
       console.log(res);
       console.log(res.data);
-      alert("Inquiry sent successfully, you will be gotten to shortly")
+      alert("Inquiry sent successfully, you will be gotten to shortly");
       setFormData({
         name: "",
         email: "",
@@ -176,11 +186,9 @@ const ListingDetails = () => {
                   <input
                     type="email"
                     name="email"
-                    placeholder="Email Address"
-                    required
                     value={formData.email}
-                    onChange={handleChange}
-                    className="w-full rounded-xl border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-slate-500"
+                    disabled
+                    className="w-full cursor-not-allowed rounded-xl border border-slate-300 bg-slate-100 px-4 py-3 text-slate-600"
                   />
 
                   <input
