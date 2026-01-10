@@ -96,7 +96,6 @@ const AgentDashboard = () => {
     getPropertyCount();
     getSummary();
     getProperties();
-    getEnquiries()
   }, []);
 
   if (!isAuthenticated) {
