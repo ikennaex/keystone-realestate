@@ -87,9 +87,11 @@ const UserDashboard = () => {
             <p className="mb-6 text-slate-600">
               Track responses from agents and follow up easily.
             </p>
+            <Link to={"/user/inquiries"}>
             <button className="rounded-xl bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-700">
               View Enquiries
             </button>
+            </Link>
           </div>
         </div>
 

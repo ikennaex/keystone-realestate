@@ -39,6 +39,13 @@ const Navbar = () => {
           </Link>
 
           <Link
+            to="/blog"
+            className="text-sm font-medium text-slate-700 hover:text-slate-900"
+          >
+            Blog
+          </Link>
+
+          <Link
             to="/agent/register"
             className="text-sm font-medium text-slate-700 hover:text-slate-900"
           >
@@ -108,6 +115,14 @@ const Navbar = () => {
               onClick={() => setMenuOpen(false)}
             >
               Buyers Page
+            </Link>
+            
+            <Link
+              to="/blog"
+              className="text-sm font-medium text-slate-700"
+              onClick={() => setMenuOpen(false)}
+            >
+              Blog
             </Link>
 
             <Link

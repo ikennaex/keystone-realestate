@@ -62,7 +62,7 @@ const AgentDashboard = () => {
 
   const getProperties = async () => {
     try {
-      const res = await api.get(`api/agents/${agent.id}/my-properties`);
+      const res = await api.get(`api/my-properties/properties`);
       // console.log(res);
       setProperties(res.data.properties);
     } catch (err) {
@@ -79,6 +79,7 @@ const AgentDashboard = () => {
       console.log(err);
     }
   };
+
   
   const handleDelete = async (id) => {
     try {
@@ -95,6 +96,7 @@ const AgentDashboard = () => {
     getPropertyCount();
     getSummary();
     getProperties();
+    getEnquiries()
   }, []);
 
   if (!isAuthenticated) {

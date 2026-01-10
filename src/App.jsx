@@ -27,6 +27,7 @@ import AdminAuthGuard from "./Contexts/AdminAuthGuard";
 import AdminPublicGuard from "./Contexts/AdminPublicGuard";
 import ServicesPage from "./Pages/Services/ServicesPage";
 import AgentVerification from "./Pages/Agent/AgentVerification";
+import UserEnquiries from "./Pages/User/UserEnquiries";
 
 const App = () => {
   return (
@@ -51,6 +52,7 @@ const App = () => {
           <Route path="dashboard" element={<UserDashboard />} />
           <Route path="login" element={<UserLogin />} />
           <Route path="register" element={<UserRegister />} />
+          <Route path="inquiries" element={<UserEnquiries />} />
         </Route>
 
         {/* Agent Routes */}

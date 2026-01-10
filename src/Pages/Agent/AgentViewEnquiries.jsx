@@ -1,31 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Phone, MapPin, CheckCircle, Mail } from "lucide-react";
+import { useAuth } from "../../Contexts/AuthContext";
+import { useAgentAuth } from "../../Contexts/AgentAuthContext";
 
-const sampleEnquiries = [
-  {
-    id: 1,
-    name: "John Doe",
-    address: "Lekki Phase 1, Lagos",
-    phone: "08012345678",
-    mail:"johndoe@gmail.com",
-    message:
-      "I am interested in the luxury apartment. Please let me know when I can schedule a viewing.",
-    contacted: false,
-  },
-  {
-    id: 2,
-    name: "Aisha Bello",
-    address: "Yaba, Lagos",
-    phone: "09098765432",
-    mail:"johndoe@gmail.com",
-    message:
-      "Is the commercial space still available? I would like more details.",
-    contacted: true,
-  },
-];
+
 
 const AgentViewEnquiries = () => {
-  const [enquiries, setEnquiries] = useState(sampleEnquiries);
+  const [enquiries, setEnquiries] = useState([]);
+  const {api} = useAgentAuth()
+
+    const getEnquiries = async () => {
+    try {
+      const res = await api.get("api/my-properties/inquiries");
+      console.log(res)
+      setEnquiries(res.data.inquiries);
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  
+  useEffect(() => {
+    getEnquiries()
+  }, [])
 
   const markAsContacted = id => {
     setEnquiries(prev =>
@@ -52,7 +49,7 @@ const AgentViewEnquiries = () => {
 
         {/* Enquiries List */}
         <div className="space-y-6">
-          {enquiries.map(enquiry => (
+          {enquiries?.map(enquiry => (
             <div
               key={enquiry.id}
               className="rounded-2xl bg-white p-6 shadow transition hover:shadow-lg"
@@ -63,20 +60,20 @@ const AgentViewEnquiries = () => {
                   <h3 className="text-lg font-semibold text-slate-900">
                     {enquiry.name}
                   </h3>
-
+{/* 
                   <div className="flex items-center gap-2 text-sm text-slate-600">
                     <MapPin size={16} />
                     {enquiry.address}
-                  </div>
+                  </div> */}
 
                   <div className="flex items-center gap-2 text-sm text-slate-600">
                     <Phone size={16} />
-                    {enquiry.phone}
+                    {enquiry.phoneNumber}
                   </div>
 
                   <div className="flex items-center gap-2 text-sm text-slate-600">
                     <Mail size={16} />
-                    {enquiry.mail}
+                    {enquiry.email}
                   </div>
                 </div>
 
@@ -100,7 +97,7 @@ const AgentViewEnquiries = () => {
 
               {/* Message */}
               <div className="mt-6 rounded-xl bg-slate-50 p-4 text-slate-700">
-                {enquiry.message}
+                {enquiry.description}
               </div>
             </div>
           ))}

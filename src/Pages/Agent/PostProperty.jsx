@@ -72,7 +72,7 @@ const PostProperty = () => {
     };
 
     try {
-      const res = await api.post(`${baseUrl}api/properties`, payload);
+      const res = await api.post(`${baseUrl}api/my-properties`, payload);
       return res.data.data.id;
     } catch (err) {
       alert(err.response?.data?.message || "Failed to post property");
@@ -92,7 +92,7 @@ const PostProperty = () => {
 
     formData.append("propertyId", propertyId);
 
-    return api.post(`/api/properties/${propertyId}/upload-media`, formData, {
+    return api.post(`/api/my-properties/${propertyId}/upload-media`, formData, {
       headers: { "Content-Type": "multipart/form-data" },
     });
   };
