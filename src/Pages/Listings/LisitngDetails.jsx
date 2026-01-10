@@ -3,20 +3,23 @@ import React, { useEffect, useState } from "react";
 import { baseUrl } from "../../baseUrl";
 import { Link, useParams } from "react-router";
 import { useAuth } from "../../Contexts/AuthContext";
+import { form } from "framer-motion/m";
 
 const ListingDetails = () => {
   const { id } = useParams();
 
-  const {user} = useAuth();
-  console.log(user)
+  const { user, api } = useAuth();
+  console.log(user);
+  const userEmail = user?.email;
   const [property, setProperty] = useState({});
   const [virtualTourUrl, setVirtualTourUrl] = useState("");
   const [mainImage, setMainImage] = useState("");
   const [formData, setFormData] = useState({
     name: "",
-    email: "",
-    phone: "",
-    message: "",
+    email: { userEmail },
+    phoneNumber: "",
+    description: "",
+    appointmentDate: "",
   });
 
   const getPropertyDetails = async () => {
@@ -54,10 +57,24 @@ const ListingDetails = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Inquiry submitted! We will contact you shortly.");
-    setFormData({ name: "", email: "", phone: "", message: "" });
+    try {
+      console.log(formData);
+      const res = await api.post(`api/inquiries/${id}`, formData);
+      console.log(res);
+      console.log(res.data);
+      alert("Inquiry sent successfully, you will be gotten to shortly")
+      setFormData({
+        name: "",
+        email: "",
+        phoneNumber: "",
+        description: "",
+        appointmentDate: "",
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -76,7 +93,8 @@ const ListingDetails = () => {
             ${property.price}
           </p>
           <p className="mt-1 text-slate-500 capitalize">
-           <span className="font-semibold">Property type:</span> {property.propertyType}
+            <span className="font-semibold">Property type:</span>{" "}
+            {property.propertyType}
           </p>
         </div>
 
@@ -167,24 +185,35 @@ const ListingDetails = () => {
 
                   <input
                     type="tel"
-                    name="phone"
+                    name="phoneNumber"
                     placeholder="Phone Number"
                     required
-                    value={formData.phone}
+                    value={formData.phoneNumber}
                     onChange={handleChange}
                     className="w-full rounded-xl border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-slate-500"
                   />
 
                   <textarea
-                    name="message"
+                    name="description"
                     rows={4}
                     placeholder="Your Message"
                     required
-                    value={formData.message}
+                    value={formData.description}
                     onChange={handleChange}
                     className="w-full rounded-xl border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-slate-500"
                   />
 
+                  <label className="pt-2 font-semibold" htmlFor="">
+                    Select an Appointment Date
+                  </label>
+
+                  <input
+                    onChange={handleChange}
+                    value={formData.appointmentDate}
+                    name="appointmentDate"
+                    className="w-full rounded-xl border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-slate-500"
+                    type="date"
+                  />
                   <button
                     type="submit"
                     className="w-full rounded-2xl bg-customBlue py-3 font-semibold text-white transition hover:bg-slate-700"
