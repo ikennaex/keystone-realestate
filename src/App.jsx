@@ -32,13 +32,17 @@ import UserEnquiries from "./Pages/User/UserEnquiries";
 import UserPublicGuard from "./Contexts/UserPublicGuard";
 import Blog from "./Pages/Blog/Blog";
 import BlogDetails from "./Pages/Blog/BlogDetails";
+import AgentForgotPassword from "./Pages/Agent/AgentForgotPassword";
+import AgentResetPassword from "./Pages/Agent/AgentResetPassword";
+import UserForgotPassword from "./Pages/User/UserForgotPassword";
+import UserResetPassword from "./Pages/User/UserResetPassword";
 
 const App = () => {
   return (
     <div>
       {/* Hidden iframe for Mailchimp form submissions */}
       <iframe name="hidden_iframe" style={{ display: "none" }}></iframe>
-      
+
       <ScrollToTop />
       <Navbar />
       <Routes>
@@ -55,20 +59,24 @@ const App = () => {
 
         {/* User Routes */}
         <Route path="user">
+          <Route path="forgot-password" element={<UserForgotPassword />} />
+          <Route path="reset-password" element={<UserResetPassword />} />
           <Route element={<UserAuthGuard />}>
-          <Route path="dashboard" element={<UserDashboard />} />
-          <Route path="inquiries" element={<UserEnquiries />} />
+            <Route path="dashboard" element={<UserDashboard />} />
+            <Route path="inquiries" element={<UserEnquiries />} />
           </Route>
 
-
           <Route element={<UserPublicGuard />}>
-          <Route path="login" element={<UserLogin />} />
-          <Route path="register" element={<UserRegister />} />
+            <Route path="login" element={<UserLogin />} />
+            <Route path="register" element={<UserRegister />} />
           </Route>
         </Route>
 
         {/* Agent Routes */}
         <Route path="agent">
+          <Route path="forgot-password" element={<AgentForgotPassword />} />
+          <Route path="reset-password" element={<AgentResetPassword />} />
+
           <Route element={<AgentPublicGuard />}>
             <Route path="register" element={<AgentRegister />} />
             <Route path="login" element={<AgentLogin />} />

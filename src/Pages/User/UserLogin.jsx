@@ -104,9 +104,9 @@ const UserLogin = () => {
 
           <p className="text-center text-sm text-slate-500">
             Forgot your password?{" "}
-            <a href="#" className="text-slate-900 underline">
+            <Link to={"/user/forgot-password"} className="text-slate-900 underline">
               Reset it
-            </a>
+            </Link>
           </p>
           <p className="text-center text-sm text-slate-500">
             New to Keystone?{" "}
