@@ -99,8 +99,8 @@ const ListingDetails = () => {
             {property.address}, {property.area}, {property.city},{" "}
             {property.state} {property.postalCode}
           </p>
-          <p className="mt-3 text-xl font-semibold text-customBlue">
-            ${property.price}
+          <p className="mt-3 text-3xl font-semibold text-customBlue">
+            ${Number(property.price).toLocaleString()}
           </p>
           <p className="mt-1 text-slate-500 capitalize">
             <span className="font-semibold">Property type:</span>{" "}
